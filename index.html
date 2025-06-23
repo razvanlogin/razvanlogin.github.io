@@ -28,7 +28,7 @@
         }
         
         button {
-            background-color: #007bff;
+            background-color: #ff3075;
             color: white;
             border: none;
             padding: 12px 25px;
@@ -41,7 +41,7 @@
         }
         
         button:hover {
-            background-color: #0056b3;
+            background-color: #a80022;
             transform: translateY(-2px);
         }
         
@@ -89,12 +89,12 @@
         }
         
         .cell:focus {
-            outline: 2px solid #007bff;
-            background-color: #e3f2fd;
+            outline: 2px solid #ff3075;
+            background-color: #ffb3cc;
         }
         
         .cell.active {
-            background-color: #bbdefb;
+            background-color: #ffb3cc;
         }
         
         .cell.blocked {
@@ -136,7 +136,7 @@
         .clues-section h3 {
             margin-bottom: 15px;
             color: #333;
-            border-bottom: 2px solid #007bff;
+            border-bottom: 2px solid #ff3075;
             padding-bottom: 5px;
             font-size: 1.3em;
         }
@@ -156,13 +156,13 @@
         }
         
         .clue.active {
-            background-color: #e3f2fd;
-            border-left: 4px solid #007bff;
+            background-color: #ffb3cc;
+            border-left: 4px solid #ff3075;
         }
         
         .clue-number {
             font-weight: bold;
-            color: #007bff;
+            color: #ff3075;
             margin-right: 5px;
         }
 
@@ -255,6 +255,7 @@
         };
         let currentActiveWord = null;
         let currentHighlightDirection = null;
+        let isTyping = false; // Track if user is actively typing
         const GRID_SIZE = 9;
 
         // Assign sequential numbers to clues based on their grid position
@@ -315,7 +316,7 @@
                         cell.addEventListener('input', handleInput);
                         cell.addEventListener('keydown', handleKeydown);
                         cell.addEventListener('focus', handleFocus);
-                        cell.addEventListener('click', handleClick);
+                        cell.addEventListener('mousedown', handleMouseDown);
                     }
 
                     gridElement.appendChild(cell);
@@ -342,6 +343,7 @@
         function handleInput(e) {
             const cell = e.target;
             cell.value = cell.value.toUpperCase();
+            isTyping = true; // Mark that user is actively typing
 
             if (cell.value && currentActiveWord) {
                 moveToNextCell(cell);
@@ -357,18 +359,22 @@
             switch(e.key) {
                 case 'ArrowRight':
                     e.preventDefault();
+                    isTyping = false;
                     moveToCell(row, col + 1);
                     break;
                 case 'ArrowLeft':
                     e.preventDefault();
+                    isTyping = false;
                     moveToCell(row, col - 1);
                     break;
                 case 'ArrowDown':
                     e.preventDefault();
+                    isTyping = false;
                     moveToCell(row + 1, col);
                     break;
                 case 'ArrowUp':
                     e.preventDefault();
+                    isTyping = false;
                     moveToCell(row - 1, col);
                     break;
                 case 'Backspace':
@@ -379,13 +385,25 @@
                     break;
                 case 'Tab':
                     e.preventDefault();
+                    isTyping = false;
                     toggleDirection(row, col);
+                    break;
+                default:
+                    // For any typing key, mark as typing
+                    if (e.key.length === 1) {
+                        isTyping = true;
+                    }
                     break;
             }
         }
 
-        // Handle focus events
+        // Handle focus events - only change direction if not actively typing
         function handleFocus(e) {
+            // If user is actively typing, don't change the current word/direction
+            if (isTyping && currentActiveWord) {
+                return;
+            }
+
             const cell = e.target;
             const row = parseInt(cell.dataset.row);
             const col = parseInt(cell.dataset.col);
@@ -405,12 +423,24 @@
             }
         }
 
-        // Handle click events for direction toggling
-        function handleClick(e) {
+        // Handle mousedown events for direction toggling (only on second click)
+        function handleMouseDown(e) {
             const cell = e.target;
             const row = parseInt(cell.dataset.row);
             const col = parseInt(cell.dataset.col);
-            toggleDirection(row, col);
+            
+            // Only toggle direction if this cell is already focused and we have a current word
+            if (document.activeElement === cell && currentActiveWord) {
+                const currentRow = parseInt(document.activeElement.dataset.row);
+                const currentCol = parseInt(document.activeElement.dataset.col);
+                
+                // Check if clicked cell is part of current highlighted word
+                if (row === currentRow && col === currentCol) {
+                    e.preventDefault(); // Prevent focus event
+                    isTyping = false;
+                    toggleDirection(row, col);
+                }
+            }
         }
 
         // Toggle between across and down directions
@@ -539,6 +569,7 @@
                     clueDiv.innerHTML = `<span class="clue-number">${clue.number}.</span> ${clue.clue}`;
                     
                     clueDiv.addEventListener('click', () => {
+                        isTyping = false; // Reset typing state when clicking on clue
                         const cell = document.querySelector(`[data-row="${clue.startRow}"][data-col="${clue.startCol}"]`);
                         if (cell) {
                             cell.focus();
@@ -562,15 +593,23 @@
             clearHighlights();
             currentActiveWord = null;
             currentHighlightDirection = null;
+            isTyping = false;
         }
 
-        // Check answers against correct solutions
+        // Check answers against correct solutions - FIXED VERSION
         function checkAnswers() {
             let correctWords = 0;
+            let totalWords = 0;
             const allPuzzleWords = [...parsedPuzzleData.clues.across, ...parsedPuzzleData.clues.down];
 
+            // Create a map to track which words we've already counted as correct
+            const correctWordsSet = new Set();
+
             allPuzzleWords.forEach(clue => {
+                totalWords++;
                 let userAnswer = '';
+                
+                // Build the user's answer for this word
                 for (let i = 0; i < clue.answer.length; i++) {
                     const cellRow = clue.direction === 'across' ? clue.startRow : clue.startRow + i;
                     const cellCol = clue.direction === 'across' ? clue.startCol + i : clue.startCol;
@@ -579,13 +618,19 @@
                         userAnswer += cell.value || '';
                     }
                 }
+                
+                // Check if this word is correct
                 if (userAnswer === clue.answer) {
-                    correctWords++;
+                    const wordKey = `${clue.startRow}-${clue.startCol}-${clue.direction}`;
+                    if (!correctWordsSet.has(wordKey)) {
+                        correctWords++;
+                        correctWordsSet.add(wordKey);
+                    }
                 }
             });
 
             // Show results
-            showResultsMessage(correctWords, allPuzzleWords.length);
+            showResultsMessage(correctWords, totalWords);
         }
 
         // Display results message
@@ -606,9 +651,27 @@
                 animation: fadeIn 0.3s ease-out;
             `;
             
+            const percentage = Math.round((correct / total) * 100);
+            let message = `Vous avez trouvé ${correct} mots sur ${total} !`;
+            
+            if (correct === total) {
+                message += `<br><strong>🎉 Félicitations ! Puzzle complété à 100% ! 🎉</strong>`;
+            } else {
+                message += `<br>(${percentage}% complété)`;
+            }
+            
             messageBox.innerHTML = `
-                <p>Vous avez trouvé ${correct} mots sur ${total} !</p>
-                <button onclick="this.parentNode.remove()">Fermer</button>
+                <p>${message}</p>
+                <button onclick="this.parentNode.remove()" style="
+                    background-color: #ff3075;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    margin-top: 15px;
+                ">Fermer</button>
             `;
             
             document.body.appendChild(messageBox);

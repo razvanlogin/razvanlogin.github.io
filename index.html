@@ -599,14 +599,10 @@
         // Check answers against correct solutions - FIXED VERSION
         function checkAnswers() {
             let correctWords = 0;
-            let totalWords = 0;
             const allPuzzleWords = [...parsedPuzzleData.clues.across, ...parsedPuzzleData.clues.down];
-
-            // Create a map to track which words we've already counted as correct
-            const correctWordsSet = new Set();
+            const totalWords = allPuzzleWords.length;
 
             allPuzzleWords.forEach(clue => {
-                totalWords++;
                 let userAnswer = '';
                 
                 // Build the user's answer for this word
@@ -621,11 +617,7 @@
                 
                 // Check if this word is correct
                 if (userAnswer === clue.answer) {
-                    const wordKey = `${clue.startRow}-${clue.startCol}-${clue.direction}`;
-                    if (!correctWordsSet.has(wordKey)) {
-                        correctWords++;
-                        correctWordsSet.add(wordKey);
-                    }
+                    correctWords++;
                 }
             });
 

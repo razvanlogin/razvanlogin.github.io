@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DDS+PETIT DEJ // 22/08/2025</title>
+    <title>DDS+PETIT DEJ // 29/08/2025</title>
     <style>
         body {
             font-family: 'Inter', Arial, sans-serif;
@@ -170,10 +170,29 @@
             from { opacity: 0; transform: translate(-50%, -60%); }
             to { opacity: 1; transform: translate(-50%, -50%); }
         }
+
+        .confetti {
+            position: fixed;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 999;
+            animation: confetti-fall linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>DDS+PETIT DEJ // 22/08/2025</h1>
+    <h1>DDS+PETIT DEJ // 29/08/2025</h1>
     
     <div class="controls">
         <button onclick="clearGrid()">Effacer Tout</button>
@@ -199,53 +218,55 @@
     <script>
         // Define the 9x9 crossword grid - 'X' denotes a black square
         const puzzleGrid = [
-            ['J', 'O', 'U', 'G', 'X', 'F', 'K', 'X', 'H'],
-            ['R', 'X', 'B', 'E', 'R', 'L', 'I', 'N', 'E'],
-            ['X', 'R', 'E', 'N', 'A', 'U', 'D', 'X', 'J'],
-            ['H', 'O', 'R', 'I', 'Z', 'O', 'N', 'S', 'X'],
-            ['Y', 'S', 'X', 'A', 'V', 'X', 'A', 'I', 'L'],
-            ['D', 'E', 'X', 'L', 'A', 'M', 'P', 'E', 'X'],
-            ['R', 'E', 'X', 'E', 'N', 'X', 'P', 'R', 'O'],
-            ['E', 'X', 'O', 'S', 'X', 'V', 'E', 'R', 'T'],
-            ['S', 'I', 'N', 'X', 'N', 'E', 'X', 'A', 'O']
+            ['C', 'L', 'U', 'B', 'X', 'M', 'A', 'L', 'X'],
+            ['A', 'N', 'X', 'I', 'T', 'A', 'L', 'I', 'E'],
+            ['P', 'X', 'S', 'H', 'E', 'R', 'P', 'A', 'X'],
+            ['X', 'C', 'R', 'O', 'S', 'T', 'I', 'N', 'I'],
+            ['V', 'O', 'I', 'R', 'X', 'I', 'N', 'T', 'R'],
+            ['E', 'M', 'X', 'E', 'O', 'N', 'S', 'X', 'O'],
+            ['L', 'X', 'S', 'A', 'R', 'A', 'X', 'B', 'N'],
+            ['O', 'P', 'I', 'U', 'M', 'X', 'G', 'A', 'I'],
+            ['S', 'U', 'R', 'X', 'E', 'P', 'U', 'R', 'E']
         ];
 
         // Define all clues with their answers and start positions
         const allClues = [
             // Horizontal clues
-            { clue: "Attelle pour boeufs", answer: "JOUG", startRow: 0, startCol: 0, direction: 'across' },
-            { clue: "François Knauf (init.)", answer: "FK", startRow: 0, startCol: 5, direction: 'across' },
-            { clue: "Voiture confortable", answer: "BERLINE", startRow: 1, startCol: 2, direction: 'across' },
-            { clue: "MON PREMIER", answer: "RENAUD", startRow: 2, startCol: 1, direction: 'across' },
-            { clue: "Lointains visibles", answer: "HORIZONS", startRow: 3, startCol: 0, direction: 'across' },
-            { clue: "Yves Schindler (init.)", answer: "YS", startRow: 4, startCol: 0, direction: 'across' },
-            { clue: "Avant (abbrev.)", answer: "AV", startRow: 4, startCol: 3, direction: 'across' },
-            { clue: "Condiment en bulbe", answer: "AIL", startRow: 4, startCol: 6, direction: 'across' },
-            { clue: "Cube dans les jeux de hasard", answer: "DE", startRow: 5, startCol: 0, direction: 'across' },
-            { clue: "Mobilier qui illumine", answer: "LAMPE", startRow: 5, startCol: 3, direction: 'across' },
-            { clue: "Note musicale après Do", answer: "RE", startRow: 6, startCol: 0, direction: 'across' },
-            { clue: "Anglais (abbrev.)", answer: "EN", startRow: 6, startCol: 3, direction: 'across' },
-            { clue: "Expert", answer: "PRO", startRow: 6, startCol: 6, direction: 'across' },
-            { clue: "Operating System (abbrev.)", answer: "OS", startRow: 7, startCol: 2, direction: 'across' },
-            { clue: "Couleur de la nature", answer: "VERT", startRow: 7, startCol: 5, direction: 'across' },
-            { clue: "Sinus en mathématiques", answer: "SIN", startRow: 8, startCol: 0, direction: 'across' },
-            { clue: "Particule négative", answer: "NE", startRow: 8, startCol: 4, direction: 'across' },
-            { clue: "Mois d'été (abbrev.)", answer: "AO", startRow: 8, startCol: 7, direction: 'across' },
+            { clue: "Association sportive", answer: "CLUB", startRow: 0, startCol: 0, direction: 'across' },
+            { clue: "Mauvais", answer: "MAL", startRow: 0, startCol: 5, direction: 'across' },
+            { clue: "365 jours", answer: "AN", startRow: 1, startCol: 0, direction: 'across' },
+            { clue: "La Botte", answer: "ITALIE", startRow: 1, startCol: 3, direction: 'across' },
+            { clue: "Guide dans l'Himalaya", answer: "SHERPA", startRow: 2, startCol: 2, direction: 'across' },
+            { clue: "Croûtons italiens", answer: "CROSTINI", startRow: 3, startCol: 1, direction: 'across' },
+            { clue: "Remarquer", answer: "VOIR", startRow: 4, startCol: 0, direction: 'across' },
+            { clue: "Intransitif (abbrev.)", answer: "INTR", startRow: 4, startCol: 5, direction: 'across' },
+            { clue: "Emilie Martinez (init.)", answer: "EM", startRow: 5, startCol: 0, direction: 'across' },
+            { clue: "Temps géologiques", answer: "EONS", startRow: 5, startCol: 3, direction: 'across' },
+            { clue: "MON PREMIER", answer: "SARA", startRow: 6, startCol: 2, direction: 'across' },
+            { clue: "Biscuiterie nantaise", answer: "BN", startRow: 6, startCol: 7, direction: 'across' },
+            { clue: "Récolté d'un pavot", answer: "OPIUM", startRow: 7, startCol: 0, direction: 'across' },
+            { clue: "De bonne humeur", answer: "GAI", startRow: 7, startCol: 6, direction: 'across' },
+            { clue: "Qui est fiable", answer: "SUR", startRow: 8, startCol: 0, direction: 'across' },
+            { clue: "Plan, coupe, élévation", answer: "EPURE", startRow: 8, startCol: 4, direction: 'across' },
+            
 
             // Vertical clues
-            { clue: "Junior (abbrev.)", answer: "JR", startRow: 0, startCol: 0, direction: 'down' },
-            { clue: "Companie de taxi", answer: "UBER", startRow: 0, startCol: 2, direction: 'down' },
-            { clue: "Femmes très intelligentes", answer: "GENIALES", startRow: 0, startCol: 3, direction: 'down' },
-            { clue: "Marqueur jaune", answer: "FLUO", startRow: 0, startCol: 5, direction: 'down' },
-            { clue: "Enlève discrètement", answer: "KIDNAPPE", startRow: 0, startCol: 6, direction: 'down' },
-            { clue: "\"Salut\" suédois", answer: "HEJ", startRow: 0, startCol: 8, direction: 'down' },
-            { clue: "MON SECOND", answer: "RAZVAN", startRow: 1, startCol: 4, direction: 'down' },
-            { clue: "Perles du matin", answer: "ROSEE", startRow: 2, startCol: 1, direction: 'down' },
-            { clue: "Monstres à plusieurs têtes", answer: "HYDRES", startRow: 3, startCol: 0, direction: 'down' },
-            { clue: "Code radio pour \"S\"", answer: "SIERRA", startRow: 3, startCol: 7, direction: 'down' },
-            { clue: "Opposé de \"OFF\"", answer: "ON", startRow: 7, startCol: 2, direction: 'down' },
-            { clue: "Préfix lié à l'oreille", answer: "OTO", startRow: 6, startCol: 8, direction: 'down' },
-            { clue: "Victor Edouard (init.)", answer: "VE", startRow: 7, startCol: 5, direction: 'down' }
+            { clue: "Limite", answer: "CAP", startRow: 0, startCol: 0, direction: 'down' },
+            { clue: "Lando Norris (init.)", answer: "LN", startRow: 0, startCol: 1, direction: 'down' },
+            { clue: "Oiseau des marais", answer: "BIHOREAU", startRow: 0, startCol: 3, direction: 'down' },
+            { clue: "MON SECOND", answer: "MARTINA", startRow: 0, startCol: 5, direction: 'down' },
+            { clue: "Ceux des hautes montagnes", answer: "ALPINS", startRow: 0, startCol: 6, direction: 'down' },
+            { clue: "Souple, élastique, collant", answer: "LIANT", startRow: 0, startCol: 7, direction: 'down' },
+            { clue: "Qui t'appartiennent", answer: "TES", startRow: 1, startCol: 4, direction: 'down' },
+            { clue: "... Lanka", answer: "SRI", startRow: 2, startCol: 2, direction: 'down' },
+            { clue: "Le plus connu des domaines internet", answer: "COM", startRow: 3, startCol: 1, direction: 'down' },
+            { clue: "Manière de se moquer", answer: "IRONIE", startRow: 3, startCol: 8, direction: 'down' },
+            { clue: "Véhicules à deux roues", answer: "VELOS", startRow: 4, startCol: 0, direction: 'down' },
+            { clue: "Arbre à feuilles dentellées", answer: "ORME", startRow: 5, startCol: 4, direction: 'down' },
+            { clue: "Titre nobilliaire anglais", answer: "SIR", startRow: 6, startCol: 2, direction: 'down' },
+            { clue: "Armoire aux boissons", answer: "BAR", startRow: 6, startCol: 7, direction: 'down' },
+            { clue: "Permis d'urbanisme", answer: "PU", startRow: 7, startCol: 1, direction: 'down' },
+            { clue: "Gaetan Ulubabyan (init.)", answer: "GU", startRow: 7, startCol: 6, direction: 'down' }
         ];
 
         // Global variables
@@ -346,7 +367,7 @@
             isTyping = true; // Mark that user is actively typing
 
             if (cell.value && currentActiveWord) {
-                moveToNextCell(cell);
+                moveToNextEmptyCell(cell);
             }
         }
 
@@ -481,8 +502,8 @@
             }
         }
 
-        // Move to next cell in current word
-        function moveToNextCell(currentCell) {
+        // Move to next EMPTY cell in current word (skips filled cells)
+        function moveToNextEmptyCell(currentCell) {
             if (!currentActiveWord) return;
 
             const row = parseInt(currentCell.dataset.row);
@@ -491,13 +512,21 @@
 
             if (currentHighlightDirection === 'across') {
                 const endCol = currentActiveWord.startCol + wordLength - 1;
-                if (col < endCol) {
-                    moveToCell(row, col + 1);
+                for (let nextCol = col + 1; nextCol <= endCol; nextCol++) {
+                    const nextCell = document.querySelector(`[data-row="${row}"][data-col="${nextCol}"]`);
+                    if (nextCell && !nextCell.value) {
+                        nextCell.focus();
+                        return;
+                    }
                 }
             } else {
                 const endRow = currentActiveWord.startRow + wordLength - 1;
-                if (row < endRow) {
-                    moveToCell(row + 1, col);
+                for (let nextRow = row + 1; nextRow <= endRow; nextRow++) {
+                    const nextCell = document.querySelector(`[data-row="${nextRow}"][data-col="${col}"]`);
+                    if (nextCell && !nextCell.value) {
+                        nextCell.focus();
+                        return;
+                    }
                 }
             }
         }
@@ -596,37 +625,65 @@
             isTyping = false;
         }
 
-        // Check answers against correct solutions - FIXED VERSION
+        // Check if entire grid matches the solution
         function checkAnswers() {
-            let correctWords = 0;
-            const allPuzzleWords = [...parsedPuzzleData.clues.across, ...parsedPuzzleData.clues.down];
-            const totalWords = allPuzzleWords.length;
-
-            allPuzzleWords.forEach(clue => {
-                let userAnswer = '';
-                
-                // Build the user's answer for this word
-                for (let i = 0; i < clue.answer.length; i++) {
-                    const cellRow = clue.direction === 'across' ? clue.startRow : clue.startRow + i;
-                    const cellCol = clue.direction === 'across' ? clue.startCol + i : clue.startCol;
-                    const cell = document.querySelector(`[data-row="${cellRow}"][data-col="${cellCol}"]`);
-                    if (cell) {
-                        userAnswer += cell.value || '';
+            let isComplete = true;
+            
+            // Check every non-blocked cell against the solution
+            for (let row = 0; row < GRID_SIZE; row++) {
+                for (let col = 0; col < GRID_SIZE; col++) {
+                    if (puzzleGrid[row][col] !== 'X') { // Skip blocked cells
+                        const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                        if (!cell || cell.value !== puzzleGrid[row][col]) {
+                            isComplete = false;
+                            break;
+                        }
                     }
                 }
-                
-                // Check if this word is correct
-                if (userAnswer === clue.answer) {
-                    correctWords++;
-                }
-            });
-
+                if (!isComplete) break;
+            }
+            
             // Show results
-            showResultsMessage(correctWords, totalWords);
+            showResultsMessage(isComplete);
+        }
+
+        // Create confetti animation
+        function createConfetti() {
+            const confettiEmojis = ['🎉', '🎊', '✨', '🎈', '🎁', '🌟', '💫', '🎭'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.textContent = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
+                    
+                    // Random horizontal position
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    
+                    // Random animation duration between 2-4 seconds
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    
+                    // Random delay for staggered effect
+                    confetti.style.animationDelay = Math.random() * 1 + 's';
+                    
+                    // Random size variation
+                    const size = Math.random() * 12 + 18; // 18-30px
+                    confetti.style.fontSize = size + 'px';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    // Remove confetti after animation completes
+                    setTimeout(() => {
+                        if (confetti.parentNode) {
+                            confetti.parentNode.removeChild(confetti);
+                        }
+                    }, 6000);
+                }, i * 100); // Stagger creation
+            }
         }
 
         // Display results message
-        function showResultsMessage(correct, total) {
+        function showResultsMessage(isComplete) {
             const messageBox = document.createElement('div');
             messageBox.style.cssText = `
                 position: fixed;
@@ -643,13 +700,13 @@
                 animation: fadeIn 0.3s ease-out;
             `;
             
-            const percentage = Math.round((correct / total) * 100);
-            let message = `Vous avez trouvé ${correct} mots sur ${total} !`;
-            
-            if (correct === total) {
-                message += `<br><strong>🎉 Félicitations ! Puzzle complété à 100% ! 🎉</strong>`;
+            let message;
+            if (isComplete) {
+                message = `<strong>🎉 Félicitations ! Puzzle complété à 100% ! 🎉</strong>`;
+                // Trigger confetti animation
+                createConfetti();
             } else {
-                message += `<br>(${percentage}% complété)`;
+                message = `<span style="color: #ff3075;">❌ La grille n'est pas encore complète ou contient des erreurs.</span>`;
             }
             
             messageBox.innerHTML = `

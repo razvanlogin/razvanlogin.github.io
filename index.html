@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DDS+PETIT DEJ // 05/09/2025</title>
+    <title>DDS+PETIT DEJ // 12/09/2025</title>
     <style>
         body{font-family:'Inter',Arial,sans-serif;max-width:1200px;margin:0 auto;padding:20px;background:#f5f5f5;color:#333;transition:all 0.3s ease}
         h1{text-align:center;margin-bottom:30px;font-size:2.5em;letter-spacing:1px;background:linear-gradient(135deg,#ff3075,#a80022);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -108,7 +108,7 @@
     </style>
 </head>
 <body>
-    <h1>DDS+PETIT DEJ // 05/09/2025</h1>
+    <h1>DDS+PETIT DEJ // 12/09/2025</h1>
     
     <div class="stats">
         <div class="stat-item">
@@ -154,48 +154,52 @@
 
     <script>
         const grid = [
-            ['T','S','A','R','@','A','S','A','P'],
-            ['S','E','N','N','A','@','A','B','E'],
-            ['@','I','A','@','R','A','M','E','N'],
-            ['E','S','P','A','G','N','O','L','E'],
-            ['@','M','A','R','U','X','A','@','L'],
-            ['G','E','L','@','M','I','N','H','O'],
-            ['O','@','A','G','E','E','S','@','P'],
-            ['J','O','U','A','N','T','@','V','E'],
-            ['I','P','@','I','T','E','M','S','@']
+            ['S','A','A','B','@','C','O','M','E'],
+            ['E','L','I','J','A','H','@','I','N'],
+            ['U','M','@','O','C','E','A','N','@'],
+            ['L','O','T','@','A','V','R','I','L'],
+            ['@','D','A','M','I','A','N','@','E'],
+            ['M','O','@','A','@','L','O','N','G'],
+            ['E','V','E','R','E','@','L','O','U'],
+            ['@','A','D','D','E','N','D','U','M'],
+            ['D','R','O','I','T','E','@','S','E']
         ];
 
         const clues = [
-            {c:"Souverain russe ou bulgare",a:"TSAR",r:0,k:0,d:'across'},
-            {c:"As soon as possible (abbrev.)",a:"ASAP",r:0,k:5,d:'across'},
-            {c:"Pilote de F1, Ayrton",a:"SENNA",r:1,k:0,d:'across'},
-            {c:"Premier ministre japonais, Shinzo",a:"ABE",r:1,k:6,d:'across'},
-            {c:"Intélligence artificielle (abbrev.)",a:"IA",r:2,k:1,d:'across'},
-            {c:"Plat japonais à base de nouilles et bouillion",a:"RAMEN",r:2,k:4,d:'across'},
-            {c:"Nationalité de mon premier et mon second!",a:"ESPAGNOLE",r:3,k:0,d:'across'},
-            {c:"MON PREMIER",a:"MARUXA",r:4,k:1,d:'across'},
-            {c:"Savon liquide",a:"GEL",r:5,k:0,d:'across'},
-            {c:"Fleuve qui sépare l'Espagne le Portugal",a:"MINHO",r:5,k:4,d:'across'},
-            {c:"Vieilles",a:"AGEES",r:6,k:2,d:'across'},
-            {c:"Participe présent du verbe Jouer",a:"JOUANT",r:7,k:0,d:'across'},
-            {c:"Victor Escobar (init.)",a:"VE",r:7,k:7,d:'across'},
-            {c:"Adresse informatique",a:"IP",r:8,k:0,d:'across'},
-            {c:"Membres d'une liste",a:"ITEMS",r:8,k:3,d:'across'},
-            {c:"Techniques spéciales",a:"TS",r:0,k:0,d:'down'},
-            {c:"Tremblement de terre",a:"SEISME",r:0,k:1,d:'down'},
-            {c:"MON SECOND",a:"ANAPALAU",r:0,k:2,d:'down'},
-            {c:"Le Rassemblement National",a:"RN",r:0,k:3,d:'down'},
-            {c:"Polynésiens",a:"SAMOANS",r:0,k:6,d:'down'},
-            {c:"Tué par Caïn",a:"ABEL",r:0,k:7,d:'down'},
-            {c:"Epouse d'Ullyse, dans la mythologie grecque",a:"PENELOPE",r:0,k:8,d:'down'},
-            {c:"Moyen utilisé pour convaincre",a:"ARGUMENT",r:1,k:4,d:'down'},
-            {c:"Inquiétude, angoisse",a:"ANXIETE",r:2,k:5,d:'down'},
-            {c:"Architecte (abbrev.)",a:"AR",r:3,k:3,d:'down'},
-            {c:"Baie rouge comestible, de provenance chinoise",a:"GOJI",r:5,k:0,d:'down'},
-            {c:"Heureux",a:"GAI",r:6,k:3,d:'down'},
-            {c:"Oscar Piastri (init.)",a:"OP",r:7,k:1,d:'down'},
-            {c:"Versus",a:"VS",r:7,k:7,d:'down'}
-            
+            {c:"Producteur suédois de voitures et d'avions",a:"SAAB",r:0,k:0,d:'across'},
+            {c:"Lac italien, au nord de Milan",a:"COME",r:0,k:5,d:'across'},
+            {c:"A joué le rôle de Frodon, ... Woods",a:"ELIJAH",r:1,k:0,d:'across'},
+            {c:"Quand c'est pas OUT, c'est...",a:"IN",r:1,k:7,d:'across'},
+            {c:"Université de Miami (abbrev.)",a:"UM",r:2,k:0,d:'across'},
+            {c:"Etendue d'eau salée qui délimite un continent",a:"OCEAN",r:2,k:3,d:'across'},
+            {c:"Partie d'un terrain issue d'une division parcellaire",a:"LOT",r:3,k:0,d:'across'},
+            {c:"Mois après Mars",a:"AVRIL",r:3,k:4,d:'across'},
+            {c:"MON PREMIER",a:"DAMIAN",r:4,k:1,d:'across'},
+            {c:"Matthieu Oscar (init.)",a:"MO",r:5,k:0,d:'across'},
+            {c:"Pas court",a:"LONG",r:5,k:5,d:'across'},
+            {c:"Commune bruxelloise avec le code postal 1140",a:"EVERE",r:6,k:0,d:'across'},
+            {c:"Version diminutive du prénom Louise",a:"LOU",r:6,k:6,d:'across'},
+            {c:"Ajout à un document, note complémentaire",a:"ADDENDUM",r:7,k:1,d:'across'},
+            {c:"Pas gauche",a:"DROITE",r:8,k:0,d:'across'},
+            {c:"Sud-est (abbrev.)",a:"SE",r:8,k:7,d:'across'},
+            {c:"Solitaire, unique",a:"SEUL",r:0,k:0,d:'down'},
+            {c:"Célèbre realisateur espagnol, Pedro ...",a:"ALMODOVAR",r:0,k:1,d:'down'},
+            {c:"Allen Iverson (init.)",a:"AI",r:0,k:2,d:'down'},
+            {c:"Brussels Jazz Orchestra (abbrev.)",a:"BJO",r:0,k:3,d:'down'},
+            {c:"Sauvage c'est un mustang, petit c'est un poney",a:"CHEVAL",r:0,k:5,d:'down'},
+            {c:"Constructeur automobile brittanique",a:"MINI",r:0,k:7,d:'down'},
+            {c:"Anglais (abbrev.)",a:"EN",r:0,k:8,d:'down'},
+            {c:"Baie rouge d'origine amazonienne",a:"ACAI",r:1,k:4,d:'down'},
+            {c:"MON SECOND",a:"ARNOLD",r:2,k:6,d:'down'},
+            {c:"La tienne",a:"TA",r:3,k:2,d:'down'},
+            {c:"Plante potagère comestible",a:"LEGUME",r:3,k:8,d:'down'},
+            {c:"Vient après lundi",a:"MARDI",r:4,k:3,d:'down'},
+            {c:"Martin Estragon (init.)",a:"ME",r:5,k:0,d:'down'},
+            {c:"1e personne du pluriel",a:"NOUS",r:5,k:7,d:'down'},
+            {c:"Ancien nom de la ville de Tokyo",a:"EDO",r:6,k:2,d:'down'},
+            {c:"Eastern European Time (abbrev.)",a:"EET",r:6,k:4,d:'down'},
+            {c:"Nord-est",a:"NE",r:7,k:5,d:'down'}
+                        
         ];
 
         let {across,down} = {across:[],down:[]};

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DDS+PETIT DEJ // 19/09/2025</title>
+    <title>DDS+PETIT DEJ // 26/09/2025</title>
     <style>
         body{font-family:'Inter',Arial,sans-serif;max-width:1200px;margin:0 auto;padding:20px;background:#f5f5f5;color:#333;transition:all 0.3s ease}
         h1{text-align:center;margin-bottom:30px;font-size:2.5em;letter-spacing:1px;background:linear-gradient(135deg,#ff3075,#a80022);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -108,7 +108,7 @@
     </style>
 </head>
 <body>
-    <h1>DDS+PETIT DEJ // 19/09/2025</h1>
+    <h1>DDS+PETIT DEJ // 26/09/2025</h1>
     
     <div class="stats">
         <div class="stat-item">
@@ -154,49 +154,46 @@
 
     <script>
         const grid = [
-            ['A','P','@','M','A','I','S','O','N'],
-            ['I','N','S','U','@','F','I','X','E'],
-            ['R','R','U','@','J','@','K','O','I'],
-            ['E','@','B','L','U','S','H','@','G'],
-            ['L','I','M','@','L','I','@','S','E'],
-            ['L','A','E','T','I','T','I','A','@'],
-            ['E','@','R','E','E','C','R','I','T'],
-            ['S','A','G','A','@','O','@','N','E'],
-            ['@','D','E','M','I','M','O','T','S']
+            ['A','P','E','R','O','@','P','@','P'],
+            ['N','@','X','@','O','T','A','G','E'],
+            ['T','R','A','N','S','I','T','E','R'],
+            ['W','I','M','@','T','R','E','N','D'],
+            ['E','V','@','G','E','E','R','T','@'],
+            ['R','A','S','A','N','T','E','@','S'],
+            ['P','L','A','I','D','@','S','E','C'],
+            ['E','E','@','N','E','Z','@','T','I'],
+            ['N','S','O','E','@','N','I','C','E']
         ];
 
         const clues = [
-            {c:"Avant projet (abbrev.)",a:"AP",r:0,k:0,d:'across'},
-            {c:"Chez DDS+, unité de 4 postes de travail",a:"MAISON",r:0,k:3,d:'across'},
-            {c:"Sans s'en apercevoir, à l'...",a:"INSU",r:1,k:0,d:'across'},
-            {c:"Un châssis non-ouvrant",a:"FIXE",r:1,k:5,d:'across'},
-            {c:"Règlement régional d'urbanisme (abbrev.)",a:"RRU",r:2,k:0,d:'across'},
-            {c:"Carpe japonnaise",a:"KOI",r:2,k:6,d:'across'},
-            {c:"Fard à joues",a:"BLUSH",r:3,k:2,d:'across'},
-            {c:"Limite, en mathématiques",a:"LIM",r:4,k:0,d:'across'},
-            {c:"Symbole chimique du lithium",a:"LI",r:4,k:4,d:'across'},
-            {c:"Sylvie Escala (init.)",a:"SE",r:4,k:7,d:'across'},
-            {c:"MON PREMIER",a:"LAETITIA",r:5,k:0,d:'across'},
-            {c:"Edité de nouveau",a:"REECRIT",r:6,k:2,d:'across'},
-            {c:"Longue histoire, chez les vikings",a:"SAGA",r:7,k:0,d:'across'},
-            {c:"Nord-est",a:"NE",r:7,k:7,d:'across'},
-            {c:"Moitiés de parole",a:"DEMIMOTS",r:8,k:1,d:'across'},
-            {c:"Fruits rouges, proches des myrtilles",a:"AIRELLES",r:0,k:0,d:'down'},
-            {c:"Parc Naturel Régional (abbrev.)",a:"PNR",r:0,k:1,d:'down'},
-            {c:"Marie Uannyo (init.)",a:"MU",r:0,k:3,d:'down'},
-            {c:"Si, en anglais",a:"IF",r:0,k:5,d:'down'},
-            {c:"Réligion en Inde",a:"SIKH",r:0,k:6,d:'down'},
-            {c:"Marque connue de bouillon de boeuf",a:"OXO",r:0,k:7,d:'down'},
-            {c:"Peint en blanc les hautes montagnes",a:"NEIGE",r:0,k:8,d:'down'},
-            {c:"Mis entièrement sous l'eau",a:"SUBMERGE",r:1,k:2,d:'down'},
-            {c:"MON SECOND",a:"JULIE",r:2,k:4,d:'down'},
-            {c:"Série télévisée, comédie",a:"SITCOM",r:3,k:5,d:'down'},
-            {c:"Intélligence artificielle (abbrev.)",a:"IA",r:4,k:1,d:'down'},
-            {c:"Personne sacrée",a:"SAINT",r:4,k:7,d:'down'},
-            {c:"Equipe, en anglais",a:"TEAM",r:5,k:3,d:'down'},
-            {c:"Infrarouge (abbrev.)",a:"IR",r:5,k:6,d:'down'},
-            {c:"Qui t'appartiennent",a:"TES",r:6,k:8,d:'down'},
-            {c:"Anno Domini (abbrev.)",a:"AD",r:7,k:1,d:'down'}
+            {c:"Apéritif",a:"APERO",r:0,k:0,d:'across'},
+            {c:"Personne capturée, prisonnier",a:"OTAGE",r:1,k:4,d:'across'},
+            {c:"Voyager",a:"TRANSITER",r:2,k:0,d:'across'},
+            {c:"MON PREMIER",a:"WIM",r:3,k:0,d:'across'},
+            {c:"Tendance, mode",a:"TREND",r:3,k:4,d:'across'},
+            {c:"Emile Vanhaegen (init.)",a:"EV",r:4,k:0,d:'across'},
+            {c:"MON SECOND",a:"GEERT",r:4,k:3,d:'across'},
+            {c:"Passe tout près, effleurante",a:"RASANTE",r:5,k:0,d:'across'},
+            {c:"Couverture en laine",a:"PLAID",r:6,k:0,d:'across'},
+            {c:"Pas mouillé",a:"SEC",r:6,k:6,d:'across'},
+            {c:"Domaine internet de l'Estonie",a:"EE",r:7,k:0,d:'across'},
+            {c:"Se trouve au centre du visage",a:"NEZ",r:7,k:3,d:'across'},
+            {c:"Symbole chimique du Titanium",a:"TI",r:7,k:7,d:'across'},
+            {c:"Nord, Sud, Ouest, Est (abbrev.)",a:"NSOE",r:8,k:0,d:'across'},
+            {c:"Ville française connue pour son Carnaval",a:"NICE",r:8,k:5,d:'across'},
+            {c:"Ville portuaire en région flamande (nom flamand)",a:"ANTWERPEN",r:0,k:0,d:'down'},
+            {c:"Epreuve universitaire",a:"EXAM",r:0,k:2,d:'down'},
+            {c:"Ville portuaire en région flamande (nom flamand)",a:"OOSTENDE",r:0,k:4,d:'down'},
+            {c:"Portemanteau mural",a:"PATERES",r:0,k:6,d:'down'},
+            {c:"Cesse d'avoir, égare",a:"PERD",r:0,k:8,d:'down'},
+            {c:"Petite ligne, en ponctuation",a:"TIRET",r:1,k:5,d:'down'},
+            {c:"Ville portuaire en région flamande (nom flamand)",a:"GENT",r:1,k:7,d:'down'},
+            {c:"Elles sont ennemies",a:"RIVALES",r:2,k:1,d:'down'},
+            {c:"Conduit pour techniques spéciales, trémie",a:"GAINE",r:4,k:3,d:'down'},
+            {c:"Société anonyme (abbrev.)",a:"SA",r:5,k:2,d:'down'},
+            {c:"Outil à lame dentée",a:"SCIE",r:5,k:8,d:'down'},
+            {c:"Etcétéra",a:"ETC",r:6,k:7,d:'down'},
+            {c:"Symbole chimique du Zinc",a:"ZN",r:7,k:5,d:'down'}
                         
         ];
 

@@ -13,7 +13,7 @@
         button:hover{background:#a80022;transform:translateY(-2px);box-shadow:0 6px 12px rgba(0,0,0,0.3)}
         button:active{transform:translateY(0);box-shadow:0 2px 4px rgba(0,0,0,0.2)}
         button:disabled{background:#ccc;cursor:not-allowed;transform:none;box-shadow:none}
-        .puzzle-container{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+        .puzzle-container{display:flex;gap:40px;flex-wrap:nowrap;justify-content:center;align-items:flex-start;overflow-x:auto}
         .grid-container,.clues-container{background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.15);transition:all 0.3s ease}
         .grid-container:hover,.clues-container:hover{box-shadow:0 8px 25px rgba(0,0,0,0.2)}
         .crossword-grid{display:grid;grid-template:repeat(12,45px)/repeat(12,45px);gap:1px;background:#333;border:2px solid #333;border-radius:6px;overflow:hidden;position:relative}
@@ -27,7 +27,7 @@
         .cell.correct{background:linear-gradient(135deg, #d4edda, #c3e6cb);border:2px solid #28a745;box-shadow:0 2px 8px rgba(40,167,69,0.2);border-radius:3px}
         .cell.incorrect{background:linear-gradient(135deg, #f8d7da, #f5c6cb);border:2px solid #dc3545;animation:shake 0.5s;box-shadow:0 2px 8px rgba(220,53,69,0.2);border-radius:3px}
  
-        .clues-container{min-width:350px;max-width:800px;display:flex;flex-direction:row;gap:30px;justify-content:space-between;background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.15);transition:all 0.3s ease}
+ .clues-container{min-width:350px;max-width:450px;flex-shrink:0;display:flex;flex-direction:column;gap:20px;background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.15);transition:all 0.3s ease}
         .clues-container:hover{box-shadow:0 8px 25px rgba(0,0,0,0.2)}
 
         .clues-section{flex:1;margin-bottom:0;min-width:0}
@@ -35,7 +35,7 @@
         .clues-section h3{margin-bottom:15px;color:#333;border-bottom:2px solid #ff3075;padding-bottom:5px;font-size:1.3em;display:flex;align-items:center;gap:8px}
         .clues-section h3::before{content:'→';font-size:1.2em;color:#ff3075}
         .clues-section:last-child h3::before{content:'↓'}
-        .clue{margin-bottom:8px;padding:8px 12px;cursor:pointer;border-radius:6px;transition:all 0.2s ease;font-size:14px;line-height:1.4;border-left:3px solid transparent;position:relative}
+        .clue{margin-bottom:6px;padding:6px 10px;cursor:pointer;border-radius:6px;transition:all 0.2s ease;font-size:13px;line-height:1.3;border-left:3px solid transparent;position:relative}
         .clue:hover{background:linear-gradient(135deg, #f0f7ff, #e8f4ff);border-left-color:#ff3075;transform:translateX(6px);box-shadow:0 3px 12px rgba(0,0,0,0.08);border-radius:6px}
         .clue.active{background:linear-gradient(135deg, #ffb3cc, #ff99c2);border-left-color:#ff3075;transform:translateX(6px);box-shadow:0 4px 16px rgba(255,48,117,0.25);border-radius:6px}
         .clue.completed{background:linear-gradient(135deg, #e8f5e8, #d4edda);border-left-color:#28a745;opacity:0.9;box-shadow:0 2px 8px rgba(40,167,69,0.1);border-radius:6px}
@@ -98,10 +98,30 @@
         .cell-number{position:absolute;top:2px;left:3px;font-size:10px;font-weight:bold;color:#ff3075;pointer-events:none;z-index:1;background:rgba(255,255,255,0.9);border-radius:2px;padding:0 2px}
         .timer{font-family:'Courier New',monospace;font-size:18px;font-weight:bold;color:#ff3075}
         
+        @media (max-width: 1100px){
+            .puzzle-container{
+                flex-wrap:wrap;
+            }
+            .clues-container{
+                max-width:800px;
+                flex-direction:row;
+            }
+        }
+
         @media (max-width: 768px){
-            .clues-container{flex-direction:column;gap:20px;max-width:500px}
-            .puzzle-container{flex-direction:column;align-items:center;gap:20px}
-            .crossword-grid{grid-template:repeat(12,35px)/repeat(12,35px)}
+            .clues-container{
+                flex-direction:column;
+                gap:20px;
+                max-width:500px;
+            }
+            .puzzle-container{
+                flex-direction:column;
+                align-items:center;
+                gap:20px;
+            }
+            .crossword-grid{
+                grid-template:repeat(12,35px)/repeat(12,35px)
+            }
             .cell{font-size:14px}
             h1{font-size:2em}
         }

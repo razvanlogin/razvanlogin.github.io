@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DDS+PETIT DEJ // 05/12/2025</title>
+    <title>DDS+ 18/12/2025</title>
     <style>
         body{font-family:'Inter',Arial,sans-serif;max-width:1200px;margin:0 auto;padding:20px;background:#f5f5f5;color:#333;transition:all 0.3s ease}
         h1{text-align:center;margin-bottom:30px;font-size:2.5em;letter-spacing:1px;background:linear-gradient(135deg,#ff3075,#a80022);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -16,7 +16,7 @@
         .puzzle-container{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
         .grid-container,.clues-container{background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.15);transition:all 0.3s ease}
         .grid-container:hover,.clues-container:hover{box-shadow:0 8px 25px rgba(0,0,0,0.2)}
-        .crossword-grid{display:grid;grid-template:repeat(9,45px)/repeat(9,45px);gap:1px;background:#333;border:2px solid #333;border-radius:6px;overflow:hidden;position:relative}
+        .crossword-grid{display:grid;grid-template:repeat(12,45px)/repeat(12,45px);gap:1px;background:#333;border:2px solid #333;border-radius:6px;overflow:hidden;position:relative}
         .cell{background:white;border:none;text-align:center;font-size:18px;font-weight:bold;text-transform:uppercase;position:relative;display:flex;align-items:center;justify-content:center;transition:all 0.15s ease;cursor:pointer}
         .cell:not(.blocked):hover{background:linear-gradient(135deg, #f0f7ff, #e6f3ff);transform:scale(1.02);z-index:2;box-shadow:0 3px 12px rgba(255,48,117,0.15);border-radius:3px}
         .cell:focus{outline:3px solid #ff3075;background:linear-gradient(135deg, #ffe6f2, #ffd9e6);z-index:3;transform:scale(1.02);box-shadow:0 0 0 1px rgba(255,48,117,0.3), 0 4px 16px rgba(255,48,117,0.2)}
@@ -101,14 +101,14 @@
         @media (max-width: 768px){
             .clues-container{flex-direction:column;gap:20px;max-width:500px}
             .puzzle-container{flex-direction:column;align-items:center;gap:20px}
-            .crossword-grid{grid-template:repeat(9,35px)/repeat(9,35px)}
+            .crossword-grid{grid-template:repeat(12,35px)/repeat(12,35px)}
             .cell{font-size:14px}
             h1{font-size:2em}
         }
     </style>
 </head>
 <body>
-    <h1>DDS+PETIT DEJ // 05/12/2025</h1>
+    <h1>______ _____ __ ___ _'_____!! // 18/12/2025</h1>
     
     <div class="stats">
         <div class="stat-item">
@@ -154,51 +154,72 @@
 
     <script>
         const grid = [
-            ['B','I','P','@','B','A','C','O','N'],
-            ['M','@','A','M','A','Z','O','N','@'],
-            ['A','B','R','I','S','@','M','T','N'],
-            ['@','O','C','R','@','A','B','@','O'],
-            ['H','R','@','E','S','P','I','O','N'],
-            ['A','N','A','L','O','P','E','Z','@'],
-            ['V','E','G','A','S','@','N','O','M'],
-            ['R','O','I','@','I','L','@','N','U'],
-            ['E','@','T','W','E','E','T','E','R']
+            ['B','A','S','E','B','A','L','L','@','C','O','N'],
+            ['O','C','T','R','O','I','@','A','M','I','@','D'],
+            ['R','@','A','@','N','@','S','I','@','N','B','A'],
+            ['D','E','F','I','N','D','A','N','N','E','E','@'],
+            ['@','A','F','T','E','R','@','E','@','M','A','T'],
+            ['A','U','@','A','S','A','P','@','H','A','U','T'],
+            ['V','@','E','L','F','I','Q','U','E','@','T','C'],
+            ['A','N','C','I','E','N','@','D','U','N','E','@'],
+            ['T','I','R','E','T','@','L','O','R','D','@','S'],
+            ['A','@','A','N','E','M','O','N','E','@','T','A'],
+            ['R','U','N','@','S','@','G','@','U','B','E','R'],
+            ['@','P','S','G','@','C','O','A','X','I','A','L']
         ];
 
         const clues = [
-            {c:"Signal sonore bref",a:"BIP",r:0,k:0,d:'across'},
-            {c:"Fine tranche de porc servie au petit déj'",a:"BACON",r:0,k:4,d:'across'},
-            {c:"Magasin en ligne fondé par Bezos",a:"AMAZON",r:1,k:2,d:'across'},
-            {c:"Lieux de protection, refuges",a:"ABRIS",r:2,k:0,d:'across'},
-            {c:"Maintenant, en langage SMS",a:"MTN",r:2,k:6,d:'across'},
-            {c:"Optical Character Recognition (abbrev.)",a:"OCR",r:3,k:1,d:'across'},
-            {c:"Ancienne Belgique (abbrev.)",a:"AB",r:3,k:5,d:'across'},
-            {c:"Human Ressources (abbrev.)",a:"HR",r:4,k:0,d:'across'},
-            {c:"Agent secret",a:"ESPION",r:4,k:3,d:'across'},
-            {c:"MON PREMIER",a:"ANALOPEZ",r:5,k:0,d:'across'},
-            {c:"La ville des casinos, Las ...",a:"VEGAS",r:6,k:0,d:'across'},
-            {c:"Apellation, pseudonyme",a:"NOM",r:6,k:6,d:'across'},
-            {c:"Pièce principale aux échecs",a:"ROI",r:7,k:0,d:'across'},
-            {c:"Pronom masculin de la 3e personne",a:"IL",r:7,k:4,d:'across'},
-            {c:"Déshabillé",a:"NU",r:7,k:7,d:'across'},
-            {c:"Publier un texte sur X",a:"TWEETER",r:8,k:2,d:'across'},
-            {c:"Bouwmeester, abbrevié",a:"BMA",r:0,k:0,d:'down'},
-            {c:"Comme Duden, Cinquantenaire, ou Josaphat",a:"PARC",r:0,k:2,d:'down'},
-            {c:"Opposé de haut",a:"BAS",r:0,k:4,d:'down'},
-            {c:"Les extremités de l'alphabet",a:"AZ",r:0,k:5,d:'down'},
-            {c:"Question sur la quantité,le prix ou la taille",a:"COMBIEN",r:0,k:6,d:'down'},
-            {c:"Ils possèdent",a:"ONT",r:0,k:7,d:'down'},
-            {c:"MON SECOND",a:"MIRELA",r:1,k:3,d:'down'},
-            {c:"Ile en Asie, voisine de Java",a:"BORNEO",r:2,k:1,d:'down'},
-            {c:"Réponse négative",a:"NON",r:2,k:8,d:'down'},
-            {c:"Application informatique (fam.)",a:"APP",r:3,k:5,d:'down'},
-            {c:"Port de mer",a:"HAVRE",r:4,k:0,d:'down'},
-            {c:"Faux jumeau, double",a:"SOSIE",r:4,k:4,d:'down'},
-            {c:"Couche de protection dans la stratosphère",a:"OZONE",r:4,k:7,d:'down'},
-            {c:"Entre en action",a:"AGIT",r:5,k:2,d:'down'},
-            {c:"Paroi, limite maçonnée",a:"MUR",r:6,k:8,d:'down'},
-            {c:"Article défini masculin",a:"LE",r:7,k:5,d:'down'}
+            {c:"Sport de batte et de gants",a:"BASEBALL",r:0,k:0,d:'across'},
+            {c:"Réunion de conspirateurs",a:"CON",r:0,k:9,d:'across'},
+            {c:"Obtention d'un PU",a:"OCTROI",r:1,k:0,d:'across'},
+            {c:"Copain, pote",a:"AMI",r:1,k:7,d:'across'},
+            {c:"Septième note musicale",a:"SI",r:2,k:6,d:'across'},
+            {c:"L'association américaine de basket",a:"NBA",r:2,k:9,d:'across'},
+            {c:"MON SECOND",a:"DEFINDANNEE",r:3,k:0,d:'across'},
+            {c:"Après, en anglais",a:"AFTER",r:4,k:1,d:'across'},
+            {c:"Qui n'est pas brillant",a:"MAT",r:4,k:9,d:'across'},
+            {c:"Symbole chimique de l'or",a:"AU",r:5,k:0,d:'across'},
+            {c:"Dès que possible",a:"ASAP",r:5,k:3,d:'across'},
+            {c:"Contraire de bas",a:"HAUT",r:5,k:8,d:'across'},
+            {c:"Relatif aux créatures à oreilles pointues",a:"ELFIQUE",r:6,k:2,d:'across'},
+            {c:"Téléconférence (abbrev.)",a:"TC",r:6,k:10,d:'across'},
+            {c:"Vieux, antique",a:"ANCIEN",r:7,k:0,d:'across'},
+            {c:"Planète désertique de Frank Herbert",a:"DUNE",r:7,k:7,d:'across'},
+            {c:"Petit trait horizontal en typographie",a:"TIRET",r:8,k:0,d:'across'},
+            {c:"Titre de noblesse britannique",a:"LORD",r:8,k:6,d:'across'},
+            {c:"La maison du poisson Némo",a:"ANEMONE",r:9,k:2,d:'across'},
+            {c:"La tienne",a:"TA",r:9,k:10,d:'across'},
+            {c:"Courir, en anglais",a:"RUN",r:10,k:0,d:'across'},
+            {c:"Application de service taxi",a:"UBER",r:10,k:8,d:'across'},
+            {c:"Club parisien de foot",a:"PSG",r:11,k:1,d:'across'},
+            {c:"Comme un câble TV",a:"COAXIAL",r:11,k:5,d:'across'},
                        
+            {c:"Limite, frontière",a:"BORD",r:0,k:0,d:'down'},
+            {c:"Anne Calloway (init.)",a:"AC",r:0,k:1,d:'down'},
+            {c:"Personnel, équipe",a:"STAFF",r:0,k:2,d:'down'},
+            {c:"Etienne Robert",a:"ER",r:0,k:3,d:'down'},
+            {c:"MON PREMIER",a:"BONNESFETES",r:0,k:4,d:'down'},
+            {c:"Artificial intelligence (abbrev.)",a:"AI",r:0,k:5,d:'down'},
+            {c:"Pelote pour tricoter",a:"LAINE",r:0,k:7,d:'down'},
+            {c:"Salle obscure à popcorn",a:"CINEMA",r:0,k:9,d:'down'},
+            {c:"Non-disclosure agreement (abbrev.)",a:"NDA",r:0,k:11,d:'down'},
+            {c:"La sienne",a:"SA",r:2,k:6,d:'down'},
+            {c:"H2O",a:"EAU",r:3,k:1,d:'down'},
+            {c:"Relatif à le péninsule en forme de botte",a:"ITALIEN",r:3,k:3,d:'down'},
+            {c:"Tuyau d'évacuation",a:"DRAIN",r:3,k:5,d:'down'},
+            {c:"Toutes taxes comprises (abbrev.)",a:"TTC",r:4,k:11,d:'down'},
+            {c:"Film de Peter Jackson avec des gens bleus",a:"AVATAR",r:5,k:0,d:'down'},
+            {c:"Papier toilette",a:"PQ",r:5,k:6,d:'down'},
+            {c:"Comblé de joie",a:"HEUREUX",r:5,k:8,d:'down'},
+            {c:"Surfaces où regarder des films",a:"ECRANS",r:6,k:2,d:'down'},
+            {c:"Nouilles japonaises épaisses",a:"UDON",r:6,k:7,d:'down'},
+            {c:"Conjonction négative",a:"NI",r:7,k:1,d:'down'},
+            {c:"Nicholas Dupont (init.)",a:"ND",r:7,k:9,d:'down'},
+            {c:"Symbole graphique d'une marque",a:"LOGO",r:8,k:6,d:'down'},
+            {c:"Société à responsabilité limitée (abbrev.)",a:"SARL",r:8,k:11,d:'down'},
+            {c:"Thé en anglais",a:"TEA",r:9,k:10,d:'down'},
+            {c:"Unité de passage (abbrev.)",a:"UP",r:10,k:1,d:'down'},
+            {c:"Préfixe signifiant deux",a:"BI",r:10,k:9,d:'down'}
                         
         ];
 
@@ -262,8 +283,8 @@
             const g = document.getElementById('grid');
             g.innerHTML = '';
 
-            for (let r = 0; r < 9; r++) {
-                for (let k = 0; k < 9; k++) {
+            for (let r = 0; r < 12; r++) {
+                for (let k = 0; k < 12; k++) {
                     const c = document.createElement('input');
                     c.type = 'text';
                     c.maxLength = 1;
@@ -434,7 +455,7 @@
         }
 
         function moveCell(r, k) {
-            if (r >= 0 && r < 9 && k >= 0 && k < 9) {
+            if (r >= 0 && r < 12 && k >= 0 && k < 12) {
                 const c = document.querySelector(`[data-row="${r}"][data-col="${k}"]`);
                 if (c && !c.disabled) c.focus();
             }
@@ -576,8 +597,8 @@
         function checkAnswers() {
             let complete = true, correct = 0, total = 0;
             
-            for (let r = 0; r < 9; r++) {
-                for (let k = 0; k < 9; k++) {
+            for (let r = 0; r < 12; r++) {
+                for (let k = 0; k < 12; k++) {
                     if (grid[r][k] !== '@') {
                         total++;
                         const c = document.querySelector(`[data-row="${r}"][data-col="${k}"]`);
@@ -608,8 +629,8 @@
             }
 
             const emptyCells = [];
-            for (let r = 0; r < 9; r++) {
-                for (let k = 0; k < 9; k++) {
+            for (let r = 0; r < 12; r++) {
+                for (let k = 0; k < 12; k++) {
                     if (grid[r][k] !== '@') {
                         const cell = document.querySelector(`[data-row="${r}"][data-col="${k}"]`);
                         if (!cell || !cell.value || cell.value !== grid[r][k]) {
@@ -792,3 +813,4 @@
     </script>
 </body>
 </html>
+

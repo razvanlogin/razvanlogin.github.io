@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DDS+ 18/12/2025</title>
+    <title>DDS+PETIT DEJ // 13/03/2026</title>
     <style>
         body{font-family:'Inter',Arial,sans-serif;max-width:1200px;margin:0 auto;padding:20px;background:#f5f5f5;color:#333;transition:all 0.3s ease}
         h1{text-align:center;margin-bottom:30px;font-size:2.5em;letter-spacing:1px;background:linear-gradient(135deg,#ff3075,#a80022);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -13,10 +12,10 @@
         button:hover{background:#a80022;transform:translateY(-2px);box-shadow:0 6px 12px rgba(0,0,0,0.3)}
         button:active{transform:translateY(0);box-shadow:0 2px 4px rgba(0,0,0,0.2)}
         button:disabled{background:#ccc;cursor:not-allowed;transform:none;box-shadow:none}
-        .puzzle-container{display:flex;gap:40px;flex-wrap:nowrap;justify-content:center;align-items:flex-start;overflow-x:auto}
+        .puzzle-container{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
         .grid-container,.clues-container{background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.15);transition:all 0.3s ease}
         .grid-container:hover,.clues-container:hover{box-shadow:0 8px 25px rgba(0,0,0,0.2)}
-        .crossword-grid{display:grid;grid-template:repeat(12,45px)/repeat(12,45px);gap:1px;background:#333;border:2px solid #333;border-radius:6px;overflow:hidden;position:relative}
+        .crossword-grid{display:grid;grid-template:repeat(9,45px)/repeat(9,45px);gap:1px;background:#333;border:2px solid #333;border-radius:6px;overflow:hidden;position:relative}
         .cell{background:white;border:none;text-align:center;font-size:18px;font-weight:bold;text-transform:uppercase;position:relative;display:flex;align-items:center;justify-content:center;transition:all 0.15s ease;cursor:pointer}
         .cell:not(.blocked):hover{background:linear-gradient(135deg, #f0f7ff, #e6f3ff);transform:scale(1.02);z-index:2;box-shadow:0 3px 12px rgba(255,48,117,0.15);border-radius:3px}
         .cell:focus{outline:3px solid #ff3075;background:linear-gradient(135deg, #ffe6f2, #ffd9e6);z-index:3;transform:scale(1.02);box-shadow:0 0 0 1px rgba(255,48,117,0.3), 0 4px 16px rgba(255,48,117,0.2)}
@@ -27,7 +26,7 @@
         .cell.correct{background:linear-gradient(135deg, #d4edda, #c3e6cb);border:2px solid #28a745;box-shadow:0 2px 8px rgba(40,167,69,0.2);border-radius:3px}
         .cell.incorrect{background:linear-gradient(135deg, #f8d7da, #f5c6cb);border:2px solid #dc3545;animation:shake 0.5s;box-shadow:0 2px 8px rgba(220,53,69,0.2);border-radius:3px}
  
- .clues-container{min-width:350px;max-width:450px;flex-shrink:0;display:flex;flex-direction:column;gap:20px;background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.15);transition:all 0.3s ease}
+        .clues-container{min-width:350px;max-width:800px;display:flex;flex-direction:row;gap:30px;justify-content:space-between;background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.15);transition:all 0.3s ease}
         .clues-container:hover{box-shadow:0 8px 25px rgba(0,0,0,0.2)}
 
         .clues-section{flex:1;margin-bottom:0;min-width:0}
@@ -35,7 +34,7 @@
         .clues-section h3{margin-bottom:15px;color:#333;border-bottom:2px solid #ff3075;padding-bottom:5px;font-size:1.3em;display:flex;align-items:center;gap:8px}
         .clues-section h3::before{content:'→';font-size:1.2em;color:#ff3075}
         .clues-section:last-child h3::before{content:'↓'}
-        .clue{margin-bottom:6px;padding:6px 10px;cursor:pointer;border-radius:6px;transition:all 0.2s ease;font-size:13px;line-height:1.3;border-left:3px solid transparent;position:relative}
+        .clue{margin-bottom:8px;padding:8px 12px;cursor:pointer;border-radius:6px;transition:all 0.2s ease;font-size:14px;line-height:1.4;border-left:3px solid transparent;position:relative}
         .clue:hover{background:linear-gradient(135deg, #f0f7ff, #e8f4ff);border-left-color:#ff3075;transform:translateX(6px);box-shadow:0 3px 12px rgba(0,0,0,0.08);border-radius:6px}
         .clue.active{background:linear-gradient(135deg, #ffb3cc, #ff99c2);border-left-color:#ff3075;transform:translateX(6px);box-shadow:0 4px 16px rgba(255,48,117,0.25);border-radius:6px}
         .clue.completed{background:linear-gradient(135deg, #e8f5e8, #d4edda);border-left-color:#28a745;opacity:0.9;box-shadow:0 2px 8px rgba(40,167,69,0.1);border-radius:6px}
@@ -98,37 +97,17 @@
         .cell-number{position:absolute;top:2px;left:3px;font-size:10px;font-weight:bold;color:#ff3075;pointer-events:none;z-index:1;background:rgba(255,255,255,0.9);border-radius:2px;padding:0 2px}
         .timer{font-family:'Courier New',monospace;font-size:18px;font-weight:bold;color:#ff3075}
         
-        @media (max-width: 1100px){
-            .puzzle-container{
-                flex-wrap:wrap;
-            }
-            .clues-container{
-                max-width:800px;
-                flex-direction:row;
-            }
-        }
-
         @media (max-width: 768px){
-            .clues-container{
-                flex-direction:column;
-                gap:20px;
-                max-width:500px;
-            }
-            .puzzle-container{
-                flex-direction:column;
-                align-items:center;
-                gap:20px;
-            }
-            .crossword-grid{
-                grid-template:repeat(12,35px)/repeat(12,35px)
-            }
+            .clues-container{flex-direction:column;gap:20px;max-width:500px}
+            .puzzle-container{flex-direction:column;align-items:center;gap:20px}
+            .crossword-grid{grid-template:repeat(9,35px)/repeat(9,35px)}
             .cell{font-size:14px}
             h1{font-size:2em}
         }
     </style>
 </head>
 <body>
-    <h1>______ _____ __ ___ _'_____!! // 18/12/2025</h1>
+    <h1>DDS+PETIT DEJ // 13/03/2026</h1>
     
     <div class="stats">
         <div class="stat-item">
@@ -174,73 +153,51 @@
 
     <script>
         const grid = [
-            ['B','A','S','E','B','A','L','L','@','C','O','N'],
-            ['O','C','T','R','O','I','@','A','M','I','@','D'],
-            ['R','@','A','@','N','@','S','I','@','N','B','A'],
-            ['D','E','F','I','N','D','A','N','N','E','E','@'],
-            ['@','A','F','T','E','R','@','E','@','M','A','T'],
-            ['A','U','@','A','S','A','P','@','H','A','U','T'],
-            ['V','@','E','L','F','I','Q','U','E','@','T','C'],
-            ['A','N','C','I','E','N','@','D','U','N','E','@'],
-            ['T','I','R','E','T','@','L','O','R','D','@','S'],
-            ['A','@','A','N','E','M','O','N','E','@','T','A'],
-            ['R','U','N','@','S','@','G','@','U','B','E','R'],
-            ['@','P','S','G','@','C','O','A','X','I','A','L']
+            ['K','I','E','V','@','A','G','E','E'],
+            ['I','@','B','I','L','L','Y','@','T'],
+            ['P','I','A','N','O','@','M','B','A'],
+            ['@','C','Y','C','L','E','@','E','@'],
+            ['A','A','@','E','@','V','E','N','D'],
+            ['B','R','O','N','Z','E','T','T','E'],
+            ['R','E','S','T','O','@','A','O','P'],
+            ['I','@','L','M','N','O','P','@','P'],
+            ['S','T','O','@','E','D','E','N','@']
         ];
 
         const clues = [
-            {c:"Sport de batte et de gants",a:"BASEBALL",r:0,k:0,d:'across'},
-            {c:"Idiot",a:"CON",r:0,k:9,d:'across'},
-            {c:"Obtention d'un PU",a:"OCTROI",r:1,k:0,d:'across'},
-            {c:"Copain, pote",a:"AMI",r:1,k:7,d:'across'},
-            {c:"Septième note musicale",a:"SI",r:2,k:6,d:'across'},
-            {c:"L'association américaine de basket",a:"NBA",r:2,k:9,d:'across'},
-            {c:"MON SECOND",a:"DEFINDANNEE",r:3,k:0,d:'across'},
-            {c:"Après, en anglais",a:"AFTER",r:4,k:1,d:'across'},
-            {c:"Qui n'est pas brillant",a:"MAT",r:4,k:9,d:'across'},
-            {c:"Symbole chimique de l'or",a:"AU",r:5,k:0,d:'across'},
-            {c:"Dès que possible",a:"ASAP",r:5,k:3,d:'across'},
-            {c:"Contraire de bas",a:"HAUT",r:5,k:8,d:'across'},
-            {c:"Relatif aux créatures à oreilles pointues",a:"ELFIQUE",r:6,k:2,d:'across'},
-            {c:"Téléconférence (abbrev.)",a:"TC",r:6,k:10,d:'across'},
-            {c:"Vieux, antique",a:"ANCIEN",r:7,k:0,d:'across'},
-            {c:"Planète désertique de Frank Herbert",a:"DUNE",r:7,k:7,d:'across'},
-            {c:"Petit trait horizontal en typographie",a:"TIRET",r:8,k:0,d:'across'},
-            {c:"Titre de noblesse britannique",a:"LORD",r:8,k:6,d:'across'},
-            {c:"La maison du poisson Némo",a:"ANEMONE",r:9,k:2,d:'across'},
-            {c:"La tienne",a:"TA",r:9,k:10,d:'across'},
-            {c:"Courir, en anglais",a:"RUN",r:10,k:0,d:'across'},
-            {c:"Application de service taxi",a:"UBER",r:10,k:8,d:'across'},
-            {c:"Club parisien de foot",a:"PSG",r:11,k:1,d:'across'},
-            {c:"Comme un câble TV",a:"COAXIAL",r:11,k:5,d:'across'},
+            {c:"Capitale ukrainienne",a:"KIEV",r:0,k:0,d:'across'},
+            {c:"Vieille",a:"AGEE",r:0,k:5,d:'across'},
+            {c:"MON PREMIER",a:"BILLY",r:1,k:2,d:'across'},
+            {c:"Instrument à touches blanches et noires",a:"PIANO",r:2,k:0,d:'across'},
+            {c:"Master of Business Administration (abbrev.)",a:"MBA",r:2,k:6,d:'across'},
+            {c:"Processus en boucle",a:"CYCLE",r:3,k:1,d:'across'},
+            {c:"Pile alkaline",a:"AA",r:4,k:0,d:'across'},
+            {c:"Fait du commerce",a:"VEND",r:4,k:5,d:'across'},
+            {c:"Exposition relaxée au soleil",a:"BRONZETTE",r:5,k:0,d:'across'},
+            {c:"Restaurant (famil.)",a:"RESTO",r:6,k:0,d:'across'},
+            {c:"Appellation d'origine protégée (abbrev.)",a:"AOP",r:6,k:6,d:'across'},
+            {c:"Entre K et Q dans l'alphabet",a:"LMNOP",r:7,k:2,d:'across'},
+            {c:"Marque d'enduit de façade",a:"STO",r:8,k:0,d:'across'},
+            {c:"Jardin du paradis",a:"EDEN",r:8,k:4,d:'across'},
+            {c:"Poulet flamand",a:"KIP",r:0,k:0,d:'down'},
+            {c:"Site de vente aux enchères",a:"EBAY",r:0,k:2,d:'down'},
+            {c:"MON SECOND",a:"VINCENTM",r:0,k:3,d:'down'},
+            {c:"Comme Pacino ou Dente",a:"AL",r:0,k:5,d:'down'},
+            {c:"Salle de sport",a:"GYM",r:0,k:6,d:'down'},
+            {c:"Estimated time of arrival (abbrev.)",a:"ETA",r:0,k:8,d:'down'},
+            {c:"Exprimer son amusement sur Internet",a:"LOL",r:1,k:4,d:'down'},
+            {c:"Fils de l'architecte Daedale",a:"ICARE",r:2,k:1,d:'down'},
+            {c:"Boîte à tartines japonnaise",a:"BENTO",r:2,k:7,d:'down'},
+            {c:"Née de la côte d'Adam",a:"EVE",r:3,k:5,d:'down'},
+            {c:"Refuges",a:"ABRIS",r:4,k:0,d:'down'},
+            {c:"Tronçon du Tour de France",a:"ETAPE",r:4,k:6,d:'down'},
+            {c:"A joué le capitaine Jack Sparrow, Johnny...",a:"DEPP",r:4,k:8,d:'down'},
+            {c:"Capitale nordique",a:"OSLO",r:5,k:2,d:'down'},
+            {c:"Surface bien définie",a:"ZONE",r:5,k:4,d:'down'},
+            {c:"Ophélie Demulier (init.)",a:"OD",r:7,k:5,d:'down'}
                        
-            {c:"Limite, frontière",a:"BORD",r:0,k:0,d:'down'},
-            {c:"Anne Calloway (init.)",a:"AC",r:0,k:1,d:'down'},
-            {c:"Personnel, équipe",a:"STAFF",r:0,k:2,d:'down'},
-            {c:"Etienne Robert",a:"ER",r:0,k:3,d:'down'},
-            {c:"MON PREMIER",a:"BONNESFETES",r:0,k:4,d:'down'},
-            {c:"Artificial intelligence (abbrev.)",a:"AI",r:0,k:5,d:'down'},
-            {c:"Pelote pour tricoter",a:"LAINE",r:0,k:7,d:'down'},
-            {c:"Salle obscure à popcorn",a:"CINEMA",r:0,k:9,d:'down'},
-            {c:"Non-disclosure agreement (abbrev.)",a:"NDA",r:0,k:11,d:'down'},
-            {c:"La sienne",a:"SA",r:2,k:6,d:'down'},
-            {c:"H2O",a:"EAU",r:3,k:1,d:'down'},
-            {c:"Relatif à le péninsule en forme de botte",a:"ITALIEN",r:3,k:3,d:'down'},
-            {c:"Tuyau d'évacuation",a:"DRAIN",r:3,k:5,d:'down'},
-            {c:"Toutes taxes comprises (abbrev.)",a:"TTC",r:4,k:11,d:'down'},
-            {c:"Film de James Cameron avec des gens bleus",a:"AVATAR",r:5,k:0,d:'down'},
-            {c:"Papier toilette",a:"PQ",r:5,k:6,d:'down'},
-            {c:"Comblé de joie",a:"HEUREUX",r:5,k:8,d:'down'},
-            {c:"Surfaces où regarder des films",a:"ECRANS",r:6,k:2,d:'down'},
-            {c:"Nouilles japonaises épaisses",a:"UDON",r:6,k:7,d:'down'},
-            {c:"Conjonction négative",a:"NI",r:7,k:1,d:'down'},
-            {c:"Nicholas Dupont (init.)",a:"ND",r:7,k:9,d:'down'},
-            {c:"Symbole graphique d'une marque",a:"LOGO",r:8,k:6,d:'down'},
-            {c:"Société à responsabilité limitée (abbrev.)",a:"SARL",r:8,k:11,d:'down'},
-            {c:"Thé en anglais",a:"TEA",r:9,k:10,d:'down'},
-            {c:"Unité de passage (abbrev.)",a:"UP",r:10,k:1,d:'down'},
-            {c:"Préfixe signifiant deux",a:"BI",r:10,k:9,d:'down'}
-                        
+      
+                      
         ];
 
         let {across,down} = {across:[],down:[]};
@@ -303,8 +260,8 @@
             const g = document.getElementById('grid');
             g.innerHTML = '';
 
-            for (let r = 0; r < 12; r++) {
-                for (let k = 0; k < 12; k++) {
+            for (let r = 0; r < 9; r++) {
+                for (let k = 0; k < 9; k++) {
                     const c = document.createElement('input');
                     c.type = 'text';
                     c.maxLength = 1;
@@ -475,7 +432,7 @@
         }
 
         function moveCell(r, k) {
-            if (r >= 0 && r < 12 && k >= 0 && k < 12) {
+            if (r >= 0 && r < 9 && k >= 0 && k < 9) {
                 const c = document.querySelector(`[data-row="${r}"][data-col="${k}"]`);
                 if (c && !c.disabled) c.focus();
             }
@@ -617,8 +574,8 @@
         function checkAnswers() {
             let complete = true, correct = 0, total = 0;
             
-            for (let r = 0; r < 12; r++) {
-                for (let k = 0; k < 12; k++) {
+            for (let r = 0; r < 9; r++) {
+                for (let k = 0; k < 9; k++) {
                     if (grid[r][k] !== '@') {
                         total++;
                         const c = document.querySelector(`[data-row="${r}"][data-col="${k}"]`);
@@ -649,8 +606,8 @@
             }
 
             const emptyCells = [];
-            for (let r = 0; r < 12; r++) {
-                for (let k = 0; k < 12; k++) {
+            for (let r = 0; r < 9; r++) {
+                for (let k = 0; k < 9; k++) {
                     if (grid[r][k] !== '@') {
                         const cell = document.querySelector(`[data-row="${r}"][data-col="${k}"]`);
                         if (!cell || !cell.value || cell.value !== grid[r][k]) {
@@ -833,4 +790,3 @@
     </script>
 </body>
 </html>
-

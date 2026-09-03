@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DDS+PETIT DEJ // 28/08/2026</title>
+    <title>DDS+PETIT DEJ // 04/09/2026</title>
     <style>
         body{font-family:'Inter',Arial,sans-serif;max-width:1200px;margin:0 auto;padding:20px;background:#f5f5f5;color:#333;transition:all 0.3s ease}
         h1{text-align:center;margin-bottom:30px;font-size:2.5em;letter-spacing:1px;background:linear-gradient(135deg,#ff3075,#a80022);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -13,102 +12,108 @@
         button:hover{background:#a80022;transform:translateY(-2px);box-shadow:0 6px 12px rgba(0,0,0,0.3)}
         button:active{transform:translateY(0);box-shadow:0 2px 4px rgba(0,0,0,0.2)}
         button:disabled{background:#ccc;cursor:not-allowed;transform:none;box-shadow:none}
+        
         .puzzle-container{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
         .grid-container,.clues-container{background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.15);transition:all 0.3s ease}
         .grid-container:hover,.clues-container:hover{box-shadow:0 8px 25px rgba(0,0,0,0.2)}
-        .crossword-grid{display:grid;grid-template:repeat(9,45px)/repeat(9,45px);gap:1px;background:#333;border:2px solid #333;border-radius:6px;overflow:hidden;position:relative}
-        .cell{background:white;border:none;text-align:center;font-size:18px;font-weight:bold;text-transform:uppercase;position:relative;display:flex;align-items:center;justify-content:center;transition:all 0.15s ease;cursor:pointer}
-        .cell:not(.blocked):hover{background:linear-gradient(135deg, #f0f7ff, #e6f3ff);transform:scale(1.02);z-index:2;box-shadow:0 3px 12px rgba(255,48,117,0.15);border-radius:3px}
+        
+        /* Updated for 9x10 Freeform */
+        .crossword-grid{display:grid;grid-template:repeat(10,45px)/repeat(9,45px);gap:2px;background:transparent;border:none;overflow:visible;position:relative}
+        .cell-wrapper {position:relative;width:100%;height:100%;display:block;background:transparent;}
+        
+        .cell{background:white;border:2px solid #333;border-radius:4px;text-align:center;font-size:18px;font-weight:bold;text-transform:uppercase;position:relative;display:flex;align-items:center;justify-content:center;transition:all 0.15s ease;cursor:pointer;width:100%;height:100%;padding:0;margin:0;box-sizing:border-box;}
+        
+        /* Themed Cells (Golden Yellow) */
+        .cell.themed {
+            background: linear-gradient(135deg, #fff2b0, #f5e38c);
+            border-color: #d4af37;
+        }
+        
+        /* Interactive States (Override Themed) */
+        .cell:not(.blocked):hover{background:linear-gradient(135deg, #f0f7ff, #e6f3ff);transform:scale(1.02);z-index:2;box-shadow:0 3px 12px rgba(255,48,117,0.15)}
+        .cell.themed:not(.blocked):hover{background:linear-gradient(135deg, #ffed4e, #fff200);}
+        
         .cell:focus{outline:3px solid #ff3075;background:linear-gradient(135deg, #ffe6f2, #ffd9e6);z-index:3;transform:scale(1.02);box-shadow:0 0 0 1px rgba(255,48,117,0.3), 0 4px 16px rgba(255,48,117,0.2)}
-        .cell.active{background:linear-gradient(135deg, #ffb3cc, #ff99c2);box-shadow:inset 0 0 0 2px #ff3075, 0 2px 8px rgba(255,48,117,0.25);border-radius:2px}
-        .cell.word-highlight{background:linear-gradient(135deg, #fff8fb, #fff0f5);border-radius:2px;box-shadow:0 1px 4px rgba(255,48,117,0.1)}
-        .cell.blocked{background:#ff3075;cursor:default;transform:none}
-        .cell.blocked:hover{background:#ff3075;transform:none;box-shadow:none}
-        .cell.correct{background:linear-gradient(135deg, #d4edda, #c3e6cb);border:2px solid #28a745;box-shadow:0 2px 8px rgba(40,167,69,0.2);border-radius:3px}
-        .cell.incorrect{background:linear-gradient(135deg, #f8d7da, #f5c6cb);border:2px solid #dc3545;animation:shake 0.5s;box-shadow:0 2px 8px rgba(220,53,69,0.2);border-radius:3px}
+        .cell.active{background:linear-gradient(135deg, #ffb3cc, #ff99c2);box-shadow:inset 0 0 0 2px #ff3075, 0 2px 8px rgba(255,48,117,0.25)}
+        .cell.word-highlight{background:linear-gradient(135deg, #fff8fb, #fff0f5);box-shadow:0 1px 4px rgba(255,48,117,0.1)}
+        
+        .cell.correct{background:linear-gradient(135deg, #d4edda, #c3e6cb);border:2px solid #28a745;box-shadow:0 2px 8px rgba(40,167,69,0.2)}
+        .cell.incorrect{background:linear-gradient(135deg, #f8d7da, #f5c6cb);border:2px solid #dc3545;animation:shake 0.5s;box-shadow:0 2px 8px rgba(220,53,69,0.2)}
  
         .clues-container{min-width:350px;max-width:800px;display:flex;flex-direction:row;gap:30px;justify-content:space-between;background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.15);transition:all 0.3s ease}
-        .clues-container:hover{box-shadow:0 8px 25px rgba(0,0,0,0.2)}
-
         .clues-section{flex:1;margin-bottom:0;min-width:0}
-
         .clues-section h3{margin-bottom:15px;color:#333;border-bottom:2px solid #ff3075;padding-bottom:5px;font-size:1.3em;display:flex;align-items:center;gap:8px}
         .clues-section h3::before{content:'→';font-size:1.2em;color:#ff3075}
         .clues-section:last-child h3::before{content:'↓'}
-        .clue{margin-bottom:8px;padding:8px 12px;cursor:pointer;border-radius:6px;transition:all 0.2s ease;font-size:14px;line-height:1.4;border-left:3px solid transparent;position:relative}
-        .clue:hover{background:linear-gradient(135deg, #f0f7ff, #e8f4ff);border-left-color:#ff3075;transform:translateX(6px);box-shadow:0 3px 12px rgba(0,0,0,0.08);border-radius:6px}
-        .clue.active{background:linear-gradient(135deg, #ffb3cc, #ff99c2);border-left-color:#ff3075;transform:translateX(6px);box-shadow:0 4px 16px rgba(255,48,117,0.25);border-radius:6px}
-        .clue.completed{background:linear-gradient(135deg, #e8f5e8, #d4edda);border-left-color:#28a745;opacity:0.9;box-shadow:0 2px 8px rgba(40,167,69,0.1);border-radius:6px}
-        .clue.completed .clue-number{color:#28a745}
-        .cell.themed {
-                    background:linear-gradient(135deg, #fff2b0, #f5e38c);
-                    position:relative;
-                    overflow:visible;
-                }
-        .cell.themed::before {
-                    content: '';
-                    position: absolute;
-                    top: -2px;
-                    left: -2px;
-                    right: -2px;
-                    bottom: -2px;
-                    background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
-                    border-radius: 3px;
-                    z-index: -1;
-                    opacity: 0.7;
-                }
-        .cell.themed:not(.blocked):hover{
-                    background:linear-gradient(135deg, #ffed4e, #fff200);
-                    transform:scale(1.03);
-                    box-shadow:0 4px 16px rgba(255,215,0,0.4);
-                }
-        .cell.themed:focus{
-                    background:linear-gradient(135deg, #ffed4e, #fff200);
-                    box-shadow:0 0 0 3px rgba(255,215,0,0.5), 0 4px 20px rgba(255,215,0,0.3);
-                }
         
+        .clue{margin-bottom:8px;padding:8px 12px;cursor:pointer;border-radius:6px;transition:all 0.2s ease;font-size:14px;line-height:1.4;border-left:3px solid transparent;position:relative}
+        .clue:hover{background:linear-gradient(135deg, #f0f7ff, #e8f4ff);border-left-color:#ff3075;transform:translateX(6px);box-shadow:0 3px 12px rgba(0,0,0,0.08)}
+        .clue.active{background:linear-gradient(135deg, #ffb3cc, #ff99c2);border-left-color:#ff3075;transform:translateX(6px);box-shadow:0 4px 16px rgba(255,48,117,0.25)}
+        .clue.completed{background:linear-gradient(135deg, #e8f5e8, #d4edda);border-left-color:#28a745;opacity:0.9;box-shadow:0 2px 8px rgba(40,167,69,0.1)}
+        .clue.completed .clue-number{color:#28a745}
         .clue-number{font-weight:bold;color:#ff3075;margin-right:8px;display:inline-block;min-width:20px}
+        
         .progress-bar{width:100%;height:4px;background:#e0e0e0;border-radius:2px;margin:20px 0;overflow:hidden}
         .progress-fill{height:100%;background:linear-gradient(90deg,#ff3075,#a80022);transition:width 0.3s ease;border-radius:2px}
+        
         .stats{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:14px;color:#666}
-        .cell-wrapper {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          background: white;
-          display: block; /* changed from flex */
-        }
-        .cell-wrapper input.cell {
-          width: 100%;
-          height: 100%;
-          border: none;
-          padding: 0;
-          margin: 0;
-          display: block;
-        }
         .stat-item{display:flex;flex-direction:column;align-items:center;gap:4px}
         .stat-number{font-size:20px;font-weight:bold;color:#ff3075}
+        .timer{font-family:'Courier New',monospace;font-size:18px;font-weight:bold;color:#ff3075}
+        
+        .hint-button{background:#28a745;margin-left:8px;padding:8px 16px;font-size:14px}
+        .hint-button:hover{background:#218838}
+        
+        .cell-number{position:absolute;top:2px;left:3px;font-size:10px;font-weight:bold;color:#ff3075;pointer-events:none;z-index:10;background:rgba(255,255,255,0.9);border-radius:2px;padding:0 2px;line-height:1}
+        
+        /* Floating Hints Container */
+        #theme-hints-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1000;
+        }
+        .theme-hint-btn {
+            background: #ff3075;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            animation: slideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 320px;
+            text-align: left;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .theme-hint-btn:hover { background: #a80022; transform: translateY(-2px); }
+        .theme-hint-btn.revealed { background: #fff2b0; color: #333; cursor: default; transform: none; border: 2px solid #d4af37; font-weight: normal; }
+
+        @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes fadeIn{from{opacity:0;transform:translate(-50%,-60%)}to{opacity:1;transform:translate(-50%,-50%)}}
         @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
         @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
         .confetti{position:fixed;font-size:24px;pointer-events:none;z-index:999;animation:confetti-fall linear infinite}
         @keyframes confetti-fall{0%{transform:translateY(-100vh) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(360deg);opacity:0}}
-        .hint-button{background:#28a745;margin-left:8px;padding:8px 16px;font-size:14px}
-        .hint-button:hover{background:#218838}
-        .cell-number{position:absolute;top:2px;left:3px;font-size:10px;font-weight:bold;color:#ff3075;pointer-events:none;z-index:1;background:rgba(255,255,255,0.9);border-radius:2px;padding:0 2px}
-        .timer{font-family:'Courier New',monospace;font-size:18px;font-weight:bold;color:#ff3075}
         
         @media (max-width: 768px){
             .clues-container{flex-direction:column;gap:20px;max-width:500px}
             .puzzle-container{flex-direction:column;align-items:center;gap:20px}
-            .crossword-grid{grid-template:repeat(9,35px)/repeat(9,35px)}
+            .crossword-grid{grid-template:repeat(10,35px)/repeat(9,35px)}
             .cell{font-size:14px}
             h1{font-size:2em}
+            #theme-hints-container { bottom: 10px; left: 10px; right: 10px; align-items: stretch; }
+            .theme-hint-btn { max-width: none; }
         }
     </style>
 </head>
 <body>
-    <h1>DDS+PETIT DEJ // 28/08/2026</h1>
+    <h1>DDS+PETIT DEJ // 04/09/2026</h1>
     
     <div class="stats">
         <div class="stat-item">
@@ -130,10 +135,9 @@
     </div>
     
     <div class="controls">
-        <button onclick="clearGrid()">🗑️ Effacer Tout</button>
-        <button onclick="checkAnswers()">✓ Vérifier</button>
-        <button onclick="giveHint()" class="hint-button" id="hint-button">💡 Indice (3 restants)</button>
-     
+        <button onclick="clearGrid()" title="Ctrl+Y: Effacer toute la grille">🗑️ Effacer Tout</button>
+        <button onclick="checkAnswers()" title="Ctrl+Enter: Vérifier les réponses">✓ Vérifier</button>
+        <button onclick="giveHint()" class="hint-button" id="hint-button" title="Ctrl+H: Obtenir une lettre aléatoire (maximum 3!)">💡 Indice (3 restants)</button>
     </div>
     
     <div class="puzzle-container">
@@ -152,57 +156,41 @@
         </div>
     </div>
 
+    <!-- Container for timed floating hints -->
+    <div id="theme-hints-container"></div>
+
     <script>
+        // Cleaned 9x10 grid - Empty ends removed
         const grid = [
-            ['@','W','I','M','@','L','I','N','O'],
-            ['B','A','T','I','F','O','L','E','R'],
-            ['E','L','@','R','A','L','E','R','@'],
-            ['T','E','L','E','M','A','T','I','N'],
-            ['O','S','@','L','E','@','S','T','O'],
-            ['N','@','P','A','U','L','@','E','T'],
-            ['N','I','A','@','S','A','I','S','I'],
-            ['E','T','R','I','E','R','S','@','C'],
-            ['R','O','C','K','@','D','O','M','E']
+            ['@','@','@','@','@','P','A','U','L'],
+            ['@','@','C','@','@','L','@','N','@'],
+            ['@','N','A','T','H','A','L','I','E'],
+            ['@','@','R','@','@','G','@','O','@'],
+            ['@','@','R','@','R','E','I','N','E'],
+            ['@','@','O','@','@','@','@','@','@'],
+            ['B','R','U','N','C','H','@','@','@'],
+            ['@','@','S','@','@','@','@','@','@'],
+            ['C','R','E','M','E','@','@','@','@'],
+            ['@','@','L','@','@','@','@','@','@']
         ];
 
+        // Adjusted coordinates (-1 to k for the stripped column) & fixed REINE direction
         const clues = [
-            {c:"MON PREMIER",a:"WIM",r:0,k:1,d:'across'},
-            {c:"Finition de sol, en lés",a:"LINO",r:0,k:5,d:'across'},
-            {c:"S'amuser, jouer avec insouciance",a:"BATIFOLER",r:1,k:0,d:'across'},
-            {c:"Estelle Lefébure (init.)",a:"EL",r:2,k:0,d:'across'},
-            {c:"Exprimer sa mauvaise humeur",a:"RALER",r:2,k:3,d:'across'},
-            {c:"Emission matinale diffusée sur FR2 depuis 1985",a:"TELEMATIN",r:3,k:0,d:'across'},
-            {c:"Le tibia en est un",a:"OS",r:4,k:0,d:'across'},
-            {c:".../la/les",a:"LE",r:4,k:3,d:'across'},
-            {c:"Marque d'enduit sur isolant",a:"STO",r:4,k:6,d:'across'},
-            {c:"Comme McCartney, Cézanne ou encore Boas",a:"PAUL",r:5,k:2,d:'across'},
-            {c:"Créature inventée par Spielberg",a:"ET",r:5,k:7,d:'across'},
-            {c:"Nier, au passé simple",a:"NIA",r:6,k:0,d:'across'},
-            {c:"Surpris ou choqué",a:"SAISI",r:6,k:4,d:'across'},
-            {c:"Soutiennent les pieds des cavaliers",a:"ETRIERS",r:7,k:0,d:'across'},
-            {c:"Pierre anglaise",a:"ROCK",r:8,k:0,d:'across'},
-            {c:"Hémisphère architecturale",a:"DOME",r:8,k:5,d:'across'},
-            {c:"Pays des Galles",a:"WALES",r:0,k:1,d:'down'},
-            {c:"Didier Zeevart s'en charge",a:"IT",r:0,k:2,d:'down'},
-            {c:"MON SECOND",a:"MIRELA",r:0,k:3,d:'down'},
-            {c:"Prénom chanté par Superbus",a:"LOLA",r:0,k:5,d:'down'},
-            {c:"Petites îles",a:"ILETS",r:0,k:6,d:'down'},
-            {c:"Mollusque marin ressemblant à un escargot",a:"NERITES",r:0,k:7,d:'down'},
-            {c:"Métal noble",a:"OR",r:0,k:8,d:'down'},
-            {c:"Construire avec du béton",a:"BETONNER",r:1,k:0,d:'down'},
-            {c:"Célèbre, connue",a:"FAMEUSE",r:1,k:4,d:'down'},
-            {c:"Document contenant des instructions",a:"NOTICE",r:3,k:8,d:'down'},
-            {c:"Espace vert aménagé",a:"PARC",r:5,k:2,d:'down'},
-            {c:"C'est du ... ou du cochon?",a:"LARD",r:5,k:5,d:'down'},
-            {c:"Designer français Ora-",a:"ITO",r:6,k:1,d:'down'},
-            {c:"Standards de normes",a:"ISO",r:6,k:6,d:'down'}
-                        
+            {c:"On y plante le parasol",a:"PLAGE",r:0,k:5,d:'down'},
+            {c:"Le 'U' dans USG",a:"UNION",r:0,k:7,d:'down'},
+            {c:"Manège tournant pour enfants ou coktail du Belga",a:"CARROUSEL",r:1,k:2,d:'down'},
+            {c:"MON SECOND",a:"NATHALIE",r:2,k:1,d:'across'},
+            {c:"Comme Mathilde ou Paola",a:"REINE",r:4,k:4,d:'across'},
+            {c:"MON PREMIER",a:"PAUL",r:0,k:5,d:'across'},
+            {c:"Combine deux repas",a:"BRUNCH",r:6,k:0,d:'across'},
+            {c:"Glacée ou hydratante",a:"CREME",r:8,k:0,d:'across'}
         ];
 
         let {across,down} = {across:[],down:[]};
         let activeWord = null, direction = null, typing = false;
-        let autoCheckEnabled = false, startTime = Date.now(), timerInterval;
+        let startTime = Date.now(), timerInterval;
         let completedWords = new Set();
+        let hintCount = 0;
 
         function assignNumbers() {
             const positions = clues.map(c => ({r:c.r,k:c.k,d:c.d,c})).sort((a,b) => a.r-b.r || a.k-b.k);
@@ -220,47 +208,44 @@
             [...across, ...down].forEach(c => {
                 const cell = document.querySelector(`[data-row="${c.r}"][data-col="${c.k}"]`);
                 if (cell && !cell.disabled) {
-              
                     const existingNumber = cell.parentElement.querySelector('.cell-number');
                     if (existingNumber) existingNumber.remove();
                     
-               
                     const numberDiv = document.createElement('div');
                     numberDiv.className = 'cell-number';
                     numberDiv.textContent = c.n;
-                    numberDiv.style.cssText = `
-                        position: absolute;
-                        top: 2px;
-                        left: 3px;
-                        font-size: 10px;
-                        font-weight: bold;
-                        color: #ff3075;
-                        pointer-events: none;
-                        z-index: 10;
-                        background: rgba(255,255,255,0.9);
-                        border-radius: 2px;
-                        padding: 0 2px;
-                    `;
-                    
                     
                     cell.parentElement.appendChild(numberDiv);
-                    
-                   
-                    const rect = cell.getBoundingClientRect();
-                    const gridRect = cell.parentElement.getBoundingClientRect();
-                    numberDiv.style.left = (rect.left - gridRect.left + 3) + 'px';
-                    numberDiv.style.top = (rect.top - gridRect.top + 2) + 'px';
                 }
             });
         }
         
+        function markThemedCells() {
+            const themedWords = clues.filter(clue =>
+                clue.c.includes('MON PREMIER') || clue.c.includes('MON SECOND')
+            );
+            
+            themedWords.forEach(word => {
+                for (let i = 0; i < word.a.length; i++) {
+                    const r = word.d === 'across' ? word.r : word.r + i;
+                    const k = word.d === 'across' ? word.k + i : word.k;
+                    const cell = document.querySelector(`[data-row="${r}"][data-col="${k}"]`);
+                    if (cell) {
+                        cell.classList.add('themed');
+                    }
+                }
+            });
+        }
         
         function initGrid() {
             const g = document.getElementById('grid');
             g.innerHTML = '';
 
-            for (let r = 0; r < 9; r++) {
+            for (let r = 0; r < 10; r++) {
                 for (let k = 0; k < 9; k++) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'cell-wrapper';
+                    
                     const c = document.createElement('input');
                     c.type = 'text';
                     c.maxLength = 1;
@@ -271,6 +256,7 @@
                     if (grid[r][k] === '@') {
                         c.disabled = true;
                         c.classList.add('blocked');
+                        wrapper.style.visibility = 'hidden';
                     } else {
                         c.addEventListener('input', handleInput);
                         c.addEventListener('keydown', handleKey);
@@ -279,26 +265,19 @@
                         c.addEventListener('mouseenter', handleHover);
                         c.addEventListener('mouseleave', clearHover);
                     }
-                    const wrapper = document.createElement('div');
-                    wrapper.className = 'cell-wrapper';
-                    wrapper.style.position = 'relative';
-                    wrapper.style.width = '100%';
-                    wrapper.style.height = '100%';
                     wrapper.appendChild(c);
                     g.appendChild(wrapper);
                 }
             }
             addNumbers();
+            markThemedCells();
             startTimer();
         }
-
-      
 
         function handleInput(e) {
             e.target.value = e.target.value.toUpperCase();
             typing = true;
             
-            // Auto-check is now always enabled
             const r = +e.target.dataset.row, k = +e.target.dataset.col;
             if (e.target.value && e.target.value !== grid[r][k]) {
                 e.target.classList.add('incorrect');
@@ -312,7 +291,6 @@
             updateStats();
             checkWordCompletion();
         }
-
 
         function handleKey(e) {
             const c = e.target;
@@ -331,41 +309,28 @@
         }
 
         function handleFocus(e) {
-            // Only auto-select if not already typing in an active word
             if (typing && activeWord) return;
-            
             const r = +e.target.dataset.row, k = +e.target.dataset.col;
-            
-            // If this cell is already part of the active word, don't change selection
             if (activeWord) {
                 const isInActiveWord = direction === 'across' ?
                     (activeWord.r === r && k >= activeWord.k && k < activeWord.k + activeWord.a.length) :
                     (activeWord.k === k && r >= activeWord.r && r < activeWord.r + activeWord.a.length);
-                
                 if (isInActiveWord) return;
             }
             
-            // New cell focused - select horizontal first, then vertical
             const aw = findWord(r, k, 'across'), dw = findWord(r, k, 'down');
-            if (aw) {
-                highlight(aw, 'across');
-            } else if (dw) {
-                highlight(dw, 'down');
-            } else {
-                clearHL();
-            }
+            if (aw) highlight(aw, 'across');
+            else if (dw) highlight(dw, 'down');
+            else clearHL();
         }
-
 
         function handleMouse(e) {
             const c = e.target, r = +c.dataset.row, k = +c.dataset.col;
             const aw = findWord(r, k, 'across'), dw = findWord(r, k, 'down');
             
-            // If clicking on the same cell that's already focused
             if (document.activeElement === c && activeWord) {
                 e.preventDefault();
                 typing = false;
-                // Cycle between available directions
                 if (aw && dw) {
                     direction = direction === 'across' ? 'down' : 'across';
                     highlight(direction === 'across' ? aw : dw, direction);
@@ -373,15 +338,10 @@
                 return;
             }
             
-            // New cell clicked - clear old selection and select new
             typing = false;
-            if (aw) {
-                highlight(aw, 'across');
-            } else if (dw) {
-                highlight(dw, 'down');
-            } else {
-                clearHL();
-            }
+            if (aw) highlight(aw, 'across');
+            else if (dw) highlight(dw, 'down');
+            else clearHL();
         }
 
         function handleHover(e) {
@@ -431,7 +391,7 @@
         }
 
         function moveCell(r, k) {
-            if (r >= 0 && r < 9 && k >= 0 && k < 9) {
+            if (r >= 0 && r < 10 && k >= 0 && k < 9) {
                 const c = document.querySelector(`[data-row="${r}"][data-col="${k}"]`);
                 if (c && !c.disabled) c.focus();
             }
@@ -481,12 +441,12 @@
         }
 
         function clearHL() {
-                    document.querySelectorAll('.active, .word-highlight').forEach(e => e.classList.remove('active', 'word-highlight'));
-                    document.querySelectorAll('.clue.active').forEach(e => e.classList.remove('active'));
-                    activeWord = null;
-                    direction = null;
-                    typing = false; // Reset typing state when clearing selection
-                }
+            document.querySelectorAll('.active, .word-highlight').forEach(e => e.classList.remove('active', 'word-highlight'));
+            document.querySelectorAll('.clue.active').forEach(e => e.classList.remove('active'));
+            activeWord = null;
+            direction = null;
+            typing = false;
+        }
 
         function createClues() {
             const ac = document.getElementById('across'), dc = document.getElementById('down');
@@ -541,7 +501,6 @@
         function updateStats() {
             document.getElementById('completed-words').textContent = completedWords.size;
             document.getElementById('hints-left').textContent = 3 - hintCount;
-            
             const progress = (completedWords.size / clues.length) * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
@@ -562,7 +521,6 @@
                 c.classList.remove('correct', 'incorrect');
             });
             clearHL();
-            typing = false;
             completedWords.clear();
             document.querySelectorAll('.clue').forEach(c => c.classList.remove('completed'));
             hintCount = 0;
@@ -573,7 +531,7 @@
         function checkAnswers() {
             let complete = true, correct = 0, total = 0;
             
-            for (let r = 0; r < 9; r++) {
+            for (let r = 0; r < 10; r++) {
                 for (let k = 0; k < 9; k++) {
                     if (grid[r][k] !== '@') {
                         total++;
@@ -592,11 +550,8 @@
                     }
                 }
             }
-            
             showResult(complete, correct, total);
         }
-
-        let hintCount = 0;
 
         function giveHint() {
             if (hintCount >= 3) {
@@ -605,7 +560,7 @@
             }
 
             const emptyCells = [];
-            for (let r = 0; r < 9; r++) {
+            for (let r = 0; r < 10; r++) {
                 for (let k = 0; k < 9; k++) {
                     if (grid[r][k] !== '@') {
                         const cell = document.querySelector(`[data-row="${r}"][data-col="${k}"]`);
@@ -627,7 +582,6 @@
                 }, 1000);
                 hintCount++;
                 
-                // Update button text
                 const remaining = 3 - hintCount;
                 document.getElementById('hint-button').textContent = `💡 Indice (${remaining} restants)`;
                 
@@ -636,9 +590,6 @@
             }
         }
 
-     
-
-       
         function confetti() {
             const emojis = ['🌞','🏖️','✨','🌡️','🏖️','🏞️','💫','🕶️','🩴','⛱️'];
             for (let i = 0; i < 50; i++) {
@@ -654,25 +605,6 @@
                     setTimeout(() => c.remove(), 6000);
                 }, i * 100);
             }
-        }
-
-        function markThemedCells() {
-            // Find MON PREMIER and MON SECOND clues
-            const themedWords = clues.filter(clue =>
-                clue.c.includes('MON PREMIER') || clue.c.includes('MON SECOND')
-            );
-            
-            themedWords.forEach(word => {
-                // Mark all cells in the themed word
-                for (let i = 0; i < word.a.length; i++) {
-                    const r = word.d === 'across' ? word.r : word.r + i;
-                    const k = word.d === 'across' ? word.k + i : word.k;
-                    const cell = document.querySelector(`[data-row="${r}"][data-col="${k}"]`);
-                    if (cell) {
-                        cell.classList.add('themed');
-                    }
-                }
-            });
         }
         
         function showResult(complete, correct = 0, total = 0) {
@@ -715,76 +647,77 @@
                     <button onclick="this.parentNode.remove()" style="background:#ff3075;color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;font-size:16px;margin-top:15px">Continuer</button>
                 `;
             }
-            
             document.body.appendChild(box);
-            
-            // Auto-close after 10 seconds if complete
-            if (complete) {
-                setTimeout(() => {
-                    if (box.parentNode) box.remove();
-                }, 10000);
-            }
+            if (complete) setTimeout(() => { if (box.parentNode) box.remove(); }, 10000);
         }
 
-        // Keyboard shortcuts
+        // --- Theme Hint System ---
+        function createThemeHintPopup(hintText) {
+            const container = document.getElementById('theme-hints-container');
+            const btn = document.createElement('button');
+            btn.className = 'theme-hint-btn';
+            btn.innerHTML = '🎁 Indice mystère débloqué ! (Cliquez ici pour un coup de main)';
+            
+            btn.onclick = () => {
+                btn.innerHTML = `💡 ${hintText}`;
+                btn.classList.add('revealed');
+                btn.onclick = null; // Disable clicking again
+            };
+            
+            container.appendChild(btn);
+        }
+
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey || e.metaKey) {
                 switch(e.key) {
                     case 'y': e.preventDefault(); clearGrid(); break;
                     case 'Enter': e.preventDefault(); checkAnswers(); break;
                     case 'h': e.preventDefault(); giveHint(); break;
-                    
                 }
             }
         });
 
+        document.addEventListener('click', (e) => {
+            const isGridClick = e.target.closest('.crossword-grid') || e.target.closest('.cell');
+            const isClueClick = e.target.closest('.clue');
+            const isControlClick = e.target.closest('.controls');
+            
+            if (!isGridClick && !isClueClick && !isControlClick) {
+                clearHL();
+                if (document.activeElement && document.activeElement.classList.contains('cell')) {
+                    document.activeElement.blur();
+                }
+            }
+        });
         
-        
-        // Click outside grid to clear selection
-                document.addEventListener('click', (e) => {
-                    // Check if click is outside the grid and clues
-                    const isGridClick = e.target.closest('.crossword-grid') || e.target.closest('.cell');
-                    const isClueClick = e.target.closest('.clue');
-                    const isControlClick = e.target.closest('.controls');
-                    
-                    if (!isGridClick && !isClueClick && !isControlClick) {
-                        clearHL();
-                        // Also blur any focused input
-                        if (document.activeElement && document.activeElement.classList.contains('cell')) {
-                            document.activeElement.blur();
-                        }
-                    }
-                });
-        
-        // Initialize everything
         document.addEventListener('DOMContentLoaded', () => {
             assignNumbers();
             initGrid();
             createClues();
-            markThemedCells();
             
-            // Add tooltips to buttons
-            document.querySelector('button[onclick="clearGrid()"]').title = "Ctrl+Y: Effacer toute la grille";
-            document.querySelector('button[onclick="checkAnswers()"]').title = "Ctrl+Enter: Vérifier les réponses";
-            document.querySelector('button[onclick="giveHint()"]').title = "Ctrl+H: Obtenir une lettre aléatoire (maximum 3!)";
-            
-            // Welcome message
+            // Initial instructions
             setTimeout(() => {
                 const welcome = document.createElement('div');
                 welcome.style.cssText = `position:fixed;bottom:20px;right:20px;background:#ff3075;color:white;padding:15px 20px;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,0.3);z-index:1000;font-size:14px;animation:fadeIn 0.5s;max-width:300px`;
                 welcome.innerHTML = `
                     <strong>💡 Astuces:</strong><br>
-                    • Cliquez ou utilisez Tab pour changer de direction<br>
+                    • Les cases dorées cachent un thème !<br>
                     • Survolez les cases pour prévisualiser les mots<br>
                     • Utilisez les raccourcis clavier (Ctrl+H pour un indice)<br>
                     <button onclick="this.parentNode.remove()" style="background:rgba(255,255,255,0.2);border:none;color:white;padding:5px 10px;border-radius:5px;cursor:pointer;margin-top:10px;float:right;">OK</button>
                 `;
                 document.body.appendChild(welcome);
-                
-                setTimeout(() => {
-                    if (welcome.parentNode) welcome.remove();
-                }, 30000);
+                setTimeout(() => { if (welcome.parentNode) welcome.remove(); }, 30000);
             }, 2000);
+
+            // Trigger Popups (at 30s and 60s)
+            setTimeout(() => {
+                createThemeHintPopup("NOVA CITY n'a pas de secret pour MON SECOND");
+            }, 30000);
+
+            setTimeout(() => {
+                createThemeHintPopup("MON PREMIER, ce McCartney des plans d'implantation");
+            }, 60000);
         });
     </script>
 </body>
